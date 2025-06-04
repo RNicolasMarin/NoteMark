@@ -6,12 +6,14 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import com.example.notemark.presentation.design_system.screenConfiguration
 import com.example.notemark.ui.theme.NoteMarkTheme
 
 class MainActivity : ComponentActivity() {
@@ -23,7 +25,7 @@ class MainActivity : ComponentActivity() {
             NoteMarkTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Greeting(
-                        name = "Android",
+                        name = MaterialTheme.screenConfiguration.name,
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
