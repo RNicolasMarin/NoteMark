@@ -1,10 +1,9 @@
-package com.example.notemark.ui.theme
+package com.example.notemark.presentation.design_system
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalConfiguration
-import com.example.notemark.presentation.design_system.ProvideScreenConfiguration
 import com.example.notemark.presentation.design_system.ScreenConfiguration.LANDSCAPE
 import com.example.notemark.presentation.design_system.ScreenConfiguration.PORTRAIT
 import com.example.notemark.presentation.design_system.ScreenConfiguration.TABLET

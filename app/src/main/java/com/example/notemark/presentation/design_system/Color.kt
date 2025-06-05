@@ -1,4 +1,4 @@
-package com.example.notemark.ui.theme
+package com.example.notemark.presentation.design_system
 
 import androidx.compose.ui.graphics.Color
 
