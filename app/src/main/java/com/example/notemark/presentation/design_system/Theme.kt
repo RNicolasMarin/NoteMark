@@ -1,5 +1,6 @@
 package com.example.notemark.presentation.design_system
 
+import android.util.Log
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
@@ -15,6 +16,7 @@ private val ColorScheme = lightColorScheme(
     onSurfaceVariant = Black2,
     surface = Grey2,
     error = Red,
+    surfaceContainerLowest = White
 )
 
 @Composable
@@ -26,17 +28,28 @@ fun NoteMarkTheme(
     val heightDp = configuration.screenHeightDp
     val widthDp = configuration.screenWidthDp
 
+    Log.d("ScreenSize", "widthDp = $widthDp, heightDp = $heightDp")
+
     val screenConfiguration = when {
         widthDp > heightDp -> LANDSCAPE
         widthDp < 840 && heightDp < 900 -> PORTRAIT
         else -> TABLET
     }
 
-    ProvideScreenConfiguration(screenConfiguration) {
-        MaterialTheme(
-            colorScheme = ColorScheme,
-            typography = Typography,
-            content = content
-        )
+    val dimens = when (screenConfiguration) {
+        PORTRAIT -> dimensPortrait
+        LANDSCAPE -> dimensPortrait
+        TABLET -> dimensPortrait
     }
+
+    ProvideDimens(dimens) {
+        ProvideScreenConfiguration(screenConfiguration) {
+            MaterialTheme(
+                colorScheme = ColorScheme,
+                typography = Typography,
+                content = content
+            )
+        }
+    }
+
 }

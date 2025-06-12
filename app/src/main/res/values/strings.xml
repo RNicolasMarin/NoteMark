@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">NoteMark</string>
+
+    <string name="landing_screen_title">Your Own Collection of Notes</string>
+    <string name="landing_screen_subtitle">Capture your thoughts and ideas.</string>
+    <string name="landing_screen_button_register">Get Started</string>
+    <string name="landing_screen_button_login">Log In</string>
+
 </resources>
