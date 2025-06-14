@@ -38,7 +38,7 @@ fun NoteMarkTheme(
     val dimens = when (screenConfiguration) {
         PHONE_PORTRAIT -> dimensPortrait
         PHONE_LANDSCAPE -> dimensLandscape
-        TABLET_PORTRAIT -> dimensPortrait
+        TABLET_PORTRAIT -> dimensTabletPortrait
         TABLET_LANDSCAPE -> dimensTabletLandscape
     }
 

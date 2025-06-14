@@ -24,6 +24,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.notemark.R
 import com.example.notemark.presentation.design_system.Dimens
@@ -45,7 +46,7 @@ fun LandingScreen(
     when (screenConfiguration) {
         PHONE_PORTRAIT -> LandingScreenPortrait(modifier)
         PHONE_LANDSCAPE -> { LandingScreenLandscape(modifier) }
-        TABLET_PORTRAIT -> {  }
+        TABLET_PORTRAIT -> { LandingScreenTabletPortrait(modifier) }
         TABLET_LANDSCAPE -> { LandingScreenLandscape(modifier) }
     }
 }
@@ -143,9 +144,57 @@ fun LandingScreenLandscape(
 }
 
 @Composable
+fun LandingScreenTabletPortrait(
+    modifier: Modifier = Modifier,
+    dimens: Dimens = MaterialTheme.dimen,
+) {
+    Box(
+        modifier = modifier.fillMaxSize().background(landingImageBackground),
+    ) {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Top
+        ) {
+            Image(
+                painter = painterResource(R.mipmap.landing_screen_image_portrait),
+                contentDescription = "",
+                modifier = Modifier.fillMaxWidth().weight(0.9f),
+                contentScale = ContentScale.FillBounds,
+                alignment = Alignment.TopCenter,
+            )
+            Spacer(modifier = Modifier.fillMaxWidth().weight(0.1f))
+        }
+
+        Column(
+            modifier = Modifier.fillMaxSize().padding(horizontal = dimens.landingPaddingVertical),
+            verticalArrangement = Arrangement.Bottom
+        ) {
+            Spacer(modifier = Modifier.fillMaxWidth().weight(0.78f))
+            LandingSheet(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(0.22f)
+                    .clip(
+                        RoundedCornerShape(
+                            topStart = dimens.landingSheetCorner,
+                            topEnd = dimens.landingSheetCorner,
+                            bottomStart = 0.dp,
+                            bottomEnd = 0.dp
+                        )
+                    ),
+                textAligns = TextAlign.Center,
+                titleStyle = MaterialTheme.typography.titleLarge,
+                subtitleStyle = MaterialTheme.typography.bodyLarge
+            )
+        }
+    }
+}
+
+@Composable
 fun LandingSheet(
     modifier: Modifier = Modifier,
     dimens: Dimens = MaterialTheme.dimen,
+    textAligns: TextAlign? = null,
     titleStyle: TextStyle,
     subtitleStyle: TextStyle
 ) {
@@ -165,8 +214,10 @@ fun LandingSheet(
         ) {
             //Title
             Text(
+                modifier = Modifier.fillMaxWidth(),
                 text = stringResource(R.string.landing_screen_title),
                 color = MaterialTheme.colorScheme.onSurface,
+                textAlign = textAligns,
                 style = titleStyle
             )
 
@@ -174,8 +225,10 @@ fun LandingSheet(
 
             //Subtitle
             Text(
+                modifier = Modifier.fillMaxWidth(),
                 text = stringResource(R.string.landing_screen_subtitle),
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
+                textAlign = textAligns,
                 style = subtitleStyle
             )
         }
