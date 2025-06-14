@@ -5,11 +5,14 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -31,6 +34,7 @@ import com.example.notemark.presentation.design_system.ScreenConfiguration.*
 import com.example.notemark.presentation.design_system.components.NoteMarkFilledButton
 import com.example.notemark.presentation.design_system.components.NoteMarkOutlinedButton
 import com.example.notemark.presentation.design_system.dimen
+import com.example.notemark.presentation.design_system.landingImageBackground
 import com.example.notemark.presentation.design_system.screenConfiguration
 
 @Composable
@@ -40,7 +44,7 @@ fun LandingScreen(
 ) {
     when (screenConfiguration) {
         PORTRAIT -> LandingScreenPortrait(modifier)
-        LANDSCAPE -> {  }
+        LANDSCAPE -> { LandingScreenLandscape(modifier) }
         TABLET -> { }
     }
 }
@@ -51,7 +55,7 @@ fun LandingScreenPortrait(
     dimens: Dimens = MaterialTheme.dimen,
 ) {
     Box(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize().background(landingImageBackground),
     ) {
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -87,6 +91,52 @@ fun LandingScreenPortrait(
                 titleStyle = MaterialTheme.typography.titleMedium,
                 subtitleStyle = MaterialTheme.typography.bodyLarge
             )
+        }
+    }
+}
+
+@Composable
+fun LandingScreenLandscape(
+    modifier: Modifier = Modifier,
+    dimens: Dimens = MaterialTheme.dimen,
+) {
+    Row(
+        modifier = modifier.fillMaxSize().background(landingImageBackground),
+    ) {
+        Spacer(modifier = Modifier.fillMaxHeight().width(dimens.landingPadding))
+
+        Image(
+            painter = painterResource(R.mipmap.landing_screen_image_portrait),
+            contentDescription = "",
+            modifier = Modifier.fillMaxWidth().weight(0.35f),
+            contentScale = ContentScale.Crop,
+            alignment = Alignment.Center,
+        )
+
+        Spacer(modifier = Modifier.fillMaxHeight().width(dimens.landingPadding))
+
+        Column(
+            modifier = Modifier.fillMaxHeight().weight(0.45f),
+        ) {
+
+            Spacer(modifier = Modifier.height(dimens.landingPaddingVertical))
+
+            LandingSheet(
+                modifier = Modifier
+                    .fillMaxWidth().weight(1f)
+                    .clip(
+                        RoundedCornerShape(
+                            topStart = dimens.landingSheetCorner,
+                            topEnd = 0.dp,
+                            bottomStart = dimens.landingSheetCorner,
+                            bottomEnd = 0.dp
+                        )
+                    ),
+                titleStyle = MaterialTheme.typography.titleMedium,
+                subtitleStyle = MaterialTheme.typography.bodyLarge
+            )
+
+            Spacer(modifier = Modifier.height(dimens.landingPaddingVertical))
         }
     }
 }

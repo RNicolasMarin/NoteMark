@@ -10,3 +10,5 @@ val White = Color(0xFFFFFFFF)
 val Red = Color(0xFFE1294B)
 val Blue = Color(0xFF5977F7)
 val BlueLight = Color(0xEEEEF1FE)
+
+val landingImageBackground = Color(0xFFE0EAFF)
