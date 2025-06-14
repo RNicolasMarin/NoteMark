@@ -15,7 +15,8 @@ import com.example.notemark.presentation.design_system.dimen
 fun NoteMarkFilledButton(
     modifier: Modifier = Modifier,
     dimens: Dimens = MaterialTheme.dimen,
-    text: String
+    text: String,
+    onClick: () -> Unit
 ) {
     Button(
         modifier = modifier
@@ -27,7 +28,7 @@ fun NoteMarkFilledButton(
             horizontal = dimens.filledButtonPaddingHorizontal,
             vertical = dimens.filledButtonPaddingVertical,
         ),
-        onClick = {}
+        onClick = onClick
     ) {
         Text(
             text = text,

@@ -37,17 +37,50 @@ import com.example.notemark.presentation.design_system.components.NoteMarkOutlin
 import com.example.notemark.presentation.design_system.dimen
 import com.example.notemark.presentation.design_system.landingImageBackground
 import com.example.notemark.presentation.design_system.screenConfiguration
+import com.example.notemark.presentation.ui.landing.LandingAction.*
+
+@Composable
+fun LandingScreen(
+    goToRegister: () -> Unit,
+    goToLogin: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    LandingScreen(
+        modifier = modifier,
+        onAction = { action ->
+            when (action) {
+                GoToLogin -> goToLogin()
+                GoToRegister -> goToRegister()
+            }
+        }
+    )
+}
 
 @Composable
 fun LandingScreen(
     modifier: Modifier = Modifier,
     screenConfiguration: ScreenConfiguration = MaterialTheme.screenConfiguration,
+    onAction: (LandingAction) -> Unit
 ) {
     when (screenConfiguration) {
-        PHONE_PORTRAIT -> LandingScreenPortrait(modifier)
-        PHONE_LANDSCAPE -> { LandingScreenLandscape(modifier) }
-        TABLET_PORTRAIT -> { LandingScreenTabletPortrait(modifier) }
-        TABLET_LANDSCAPE -> { LandingScreenLandscape(modifier) }
+        PHONE_PORTRAIT -> {
+            LandingScreenPortrait(
+                modifier = modifier,
+                onAction = onAction
+            )
+        }
+        TABLET_PORTRAIT -> {
+            LandingScreenTabletPortrait(
+                modifier = modifier,
+                onAction = onAction
+            )
+        }
+        PHONE_LANDSCAPE, TABLET_LANDSCAPE -> {
+            LandingScreenLandscape(
+                modifier = modifier,
+                onAction = onAction
+            )
+        }
     }
 }
 
@@ -55,6 +88,7 @@ fun LandingScreen(
 fun LandingScreenPortrait(
     modifier: Modifier = Modifier,
     dimens: Dimens = MaterialTheme.dimen,
+    onAction: (LandingAction) -> Unit
 ) {
     Box(
         modifier = modifier.fillMaxSize().background(landingImageBackground),
@@ -91,7 +125,8 @@ fun LandingScreenPortrait(
                         )
                     ),
                 titleStyle = MaterialTheme.typography.titleMedium,
-                subtitleStyle = MaterialTheme.typography.bodyLarge
+                subtitleStyle = MaterialTheme.typography.bodyLarge,
+                onAction = onAction
             )
         }
     }
@@ -101,6 +136,7 @@ fun LandingScreenPortrait(
 fun LandingScreenLandscape(
     modifier: Modifier = Modifier,
     dimens: Dimens = MaterialTheme.dimen,
+    onAction: (LandingAction) -> Unit
 ) {
     Row(
         modifier = modifier.fillMaxSize().background(landingImageBackground),
@@ -135,7 +171,8 @@ fun LandingScreenLandscape(
                         )
                     ),
                 titleStyle = MaterialTheme.typography.titleMedium,
-                subtitleStyle = MaterialTheme.typography.bodyLarge
+                subtitleStyle = MaterialTheme.typography.bodyLarge,
+                onAction = onAction
             )
 
             Spacer(modifier = Modifier.height(dimens.landingPaddingVertical))
@@ -147,6 +184,7 @@ fun LandingScreenLandscape(
 fun LandingScreenTabletPortrait(
     modifier: Modifier = Modifier,
     dimens: Dimens = MaterialTheme.dimen,
+    onAction: (LandingAction) -> Unit
 ) {
     Box(
         modifier = modifier.fillMaxSize().background(landingImageBackground),
@@ -184,7 +222,8 @@ fun LandingScreenTabletPortrait(
                     ),
                 textAligns = TextAlign.Center,
                 titleStyle = MaterialTheme.typography.titleLarge,
-                subtitleStyle = MaterialTheme.typography.bodyLarge
+                subtitleStyle = MaterialTheme.typography.bodyLarge,
+                onAction = onAction
             )
         }
     }
@@ -196,7 +235,8 @@ fun LandingSheet(
     dimens: Dimens = MaterialTheme.dimen,
     textAligns: TextAlign? = null,
     titleStyle: TextStyle,
-    subtitleStyle: TextStyle
+    subtitleStyle: TextStyle,
+    onAction: (LandingAction) -> Unit
 ) {
     Column (
         modifier = modifier
@@ -239,7 +279,10 @@ fun LandingSheet(
             //Filled button
             NoteMarkFilledButton(
                 modifier = Modifier.fillMaxWidth(),
-                text = stringResource(R.string.landing_screen_button_register)
+                text = stringResource(R.string.landing_screen_button_register),
+                onClick = {
+                    onAction(GoToRegister)
+                }
             )
 
             Spacer(modifier = Modifier.height(dimens.landingSheetPaddingBetweenButtons))
@@ -247,7 +290,10 @@ fun LandingSheet(
             //Outlined button
             NoteMarkOutlinedButton(
                 modifier = Modifier.fillMaxWidth(),
-                text = stringResource(R.string.landing_screen_button_login)
+                text = stringResource(R.string.landing_screen_button_login),
+                onClick = {
+                    onAction(GoToLogin)
+                }
             )
         }
 
@@ -260,6 +306,7 @@ private fun LandingScreenPreview() {
     NoteMarkTheme {
         LandingScreen(
             modifier = Modifier.fillMaxSize(),
+            onAction = {}
         )
     }
 }

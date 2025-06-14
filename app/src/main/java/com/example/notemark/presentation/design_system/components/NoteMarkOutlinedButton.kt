@@ -17,7 +17,8 @@ import com.example.notemark.presentation.design_system.dimen
 fun NoteMarkOutlinedButton(
     modifier: Modifier = Modifier,
     dimens: Dimens = MaterialTheme.dimen,
-    text: String
+    text: String,
+    onClick: () -> Unit
 ) {
     OutlinedButton(
         modifier = modifier
@@ -33,7 +34,7 @@ fun NoteMarkOutlinedButton(
             horizontal = dimens.filledButtonPaddingHorizontal,
             vertical = dimens.filledButtonPaddingVertical,
         ),
-        onClick = {}
+        onClick = onClick
     ) {
         Text(
             text = text,
