@@ -36,7 +36,7 @@ class MainActivity : ComponentActivity() {
                     val end: Dp
                     val bottom: Dp
 
-                    if (MaterialTheme.screenConfiguration == ScreenConfiguration.LANDSCAPE) {
+                    if (MaterialTheme.screenConfiguration == ScreenConfiguration.PHONE_LANDSCAPE) {
                         start = innerPadding.calculateStartPadding(layoutDirection)
                         end = innerPadding.calculateEndPadding(layoutDirection)
                         bottom = 0.dp

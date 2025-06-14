@@ -43,9 +43,10 @@ fun LandingScreen(
     screenConfiguration: ScreenConfiguration = MaterialTheme.screenConfiguration,
 ) {
     when (screenConfiguration) {
-        PORTRAIT -> LandingScreenPortrait(modifier)
-        LANDSCAPE -> { LandingScreenLandscape(modifier) }
-        TABLET -> { }
+        PHONE_PORTRAIT -> LandingScreenPortrait(modifier)
+        PHONE_LANDSCAPE -> { LandingScreenLandscape(modifier) }
+        TABLET_PORTRAIT -> {  }
+        TABLET_LANDSCAPE -> { LandingScreenLandscape(modifier) }
     }
 }
 

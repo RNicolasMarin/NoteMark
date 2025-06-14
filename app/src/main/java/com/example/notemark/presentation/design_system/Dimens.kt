@@ -47,3 +47,17 @@ val dimensLandscape = Dimens(
     landingSheetPaddingBetweenButtons = 6.dp,
     landingSheetCorner = 20.dp
 )
+
+val dimensTabletLandscape = Dimens(
+    filledButtonCorner = 24.dp,
+    filledButtonPaddingVertical = 24.dp,
+    filledButtonPaddingHorizontal = 40.dp,
+    landingPadding = 40.dp,
+    landingPaddingVertical = 56.dp,
+    landingSheetPaddingHorizontal = 96.dp,
+    landingSheetPaddingTop = 0.dp,
+    landingSheetPaddingBottom = 0.dp,
+    landingSheetPaddingBetweenTexts = 12.dp,
+    landingSheetPaddingBetweenButtons = 16.dp,
+    landingSheetCorner = 40.dp
+)

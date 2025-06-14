@@ -19,7 +19,7 @@ fun ProvideScreenConfiguration(
 }
 
 private val LocalScreenConfiguration = staticCompositionLocalOf {
-    ScreenConfiguration.PORTRAIT
+    ScreenConfiguration.PHONE_PORTRAIT
 }
 
 val MaterialTheme.screenConfiguration: ScreenConfiguration

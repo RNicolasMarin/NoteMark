@@ -5,9 +5,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalConfiguration
-import com.example.notemark.presentation.design_system.ScreenConfiguration.LANDSCAPE
-import com.example.notemark.presentation.design_system.ScreenConfiguration.PORTRAIT
-import com.example.notemark.presentation.design_system.ScreenConfiguration.TABLET
+import com.example.notemark.presentation.design_system.ScreenConfiguration.*
 
 private val ColorScheme = lightColorScheme(
     primary = Blue,
@@ -31,22 +29,29 @@ fun NoteMarkTheme(
     Log.d("ScreenSize", "widthDp = $widthDp, heightDp = $heightDp")
 
     val screenConfiguration = when {
-        widthDp > heightDp -> LANDSCAPE
-        widthDp < 840 && heightDp < 900 -> PORTRAIT
-        else -> TABLET
+        widthDp > heightDp && heightDp > 600 -> TABLET_LANDSCAPE
+        widthDp > heightDp -> PHONE_LANDSCAPE
+        widthDp < 840 && heightDp < 900 -> PHONE_PORTRAIT
+        else -> TABLET_PORTRAIT
     }
 
     val dimens = when (screenConfiguration) {
-        PORTRAIT -> dimensPortrait
-        LANDSCAPE -> dimensLandscape
-        TABLET -> dimensPortrait
+        PHONE_PORTRAIT -> dimensPortrait
+        PHONE_LANDSCAPE -> dimensLandscape
+        TABLET_PORTRAIT -> dimensPortrait
+        TABLET_LANDSCAPE -> dimensTabletLandscape
+    }
+
+    val typography = when {
+        screenConfiguration == TABLET_LANDSCAPE -> TypographyTabletLandscape
+        else -> Typography
     }
 
     ProvideDimens(dimens) {
         ProvideScreenConfiguration(screenConfiguration) {
             MaterialTheme(
                 colorScheme = ColorScheme,
-                typography = Typography,
+                typography = typography,
                 content = content
             )
         }
