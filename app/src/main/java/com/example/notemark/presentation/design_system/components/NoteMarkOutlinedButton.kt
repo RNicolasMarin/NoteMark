@@ -10,29 +10,29 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
-import com.example.notemark.presentation.design_system.Dimens
+import com.example.notemark.presentation.design_system.DimensButtons
 import com.example.notemark.presentation.design_system.dimen
 
 @Composable
 fun NoteMarkOutlinedButton(
     modifier: Modifier = Modifier,
-    dimens: Dimens = MaterialTheme.dimen,
+    dimens: DimensButtons = MaterialTheme.dimen.generic.buttons,
     text: String,
     onClick: () -> Unit
 ) {
     OutlinedButton(
         modifier = modifier
             .clip(
-                RoundedCornerShape(dimens.filledButtonCorner)
+                RoundedCornerShape(dimens.corner)
             ),
-        shape = RoundedCornerShape(dimens.filledButtonCorner),
+        shape = RoundedCornerShape(dimens.corner),
         border = BorderStroke(
             width = 1.dp,
             color = MaterialTheme.colorScheme.primary
         ),
         contentPadding = PaddingValues(
-            horizontal = dimens.filledButtonPaddingHorizontal,
-            vertical = dimens.filledButtonPaddingVertical,
+            horizontal = dimens.paddingHorizontal,
+            vertical = dimens.paddingVertical,
         ),
         onClick = onClick
     ) {

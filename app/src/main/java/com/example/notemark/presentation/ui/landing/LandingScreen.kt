@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -27,7 +26,8 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.notemark.R
-import com.example.notemark.presentation.design_system.Dimens
+import com.example.notemark.presentation.design_system.DimensLanding
+import com.example.notemark.presentation.design_system.DimensLandingSheet
 import com.example.notemark.presentation.design_system.MultiDevicePreview
 import com.example.notemark.presentation.design_system.NoteMarkTheme
 import com.example.notemark.presentation.design_system.ScreenConfiguration
@@ -87,7 +87,7 @@ fun LandingScreen(
 @Composable
 fun LandingScreenPortrait(
     modifier: Modifier = Modifier,
-    dimens: Dimens = MaterialTheme.dimen,
+    dimens: DimensLanding = MaterialTheme.dimen.landing,
     onAction: (LandingAction) -> Unit
 ) {
     Box(
@@ -118,8 +118,8 @@ fun LandingScreenPortrait(
                     .weight(0.40f)
                     .clip(
                         RoundedCornerShape(
-                            topStart = dimens.landingSheetCorner,
-                            topEnd = dimens.landingSheetCorner,
+                            topStart = dimens.sheet.corner,
+                            topEnd = dimens.sheet.corner,
                             bottomStart = 0.dp,
                             bottomEnd = 0.dp
                         )
@@ -135,13 +135,13 @@ fun LandingScreenPortrait(
 @Composable
 fun LandingScreenLandscape(
     modifier: Modifier = Modifier,
-    dimens: Dimens = MaterialTheme.dimen,
+    dimens: DimensLanding = MaterialTheme.dimen.landing,
     onAction: (LandingAction) -> Unit
 ) {
     Row(
         modifier = modifier.fillMaxSize().background(landingImageBackground),
     ) {
-        Spacer(modifier = Modifier.fillMaxHeight().width(dimens.landingPadding))
+        Spacer(modifier = Modifier.fillMaxHeight().weight(0.01f))
 
         Image(
             painter = painterResource(R.mipmap.landing_screen_image_portrait),
@@ -151,22 +151,22 @@ fun LandingScreenLandscape(
             alignment = Alignment.Center,
         )
 
-        Spacer(modifier = Modifier.fillMaxHeight().width(dimens.landingPadding))
+        Spacer(modifier = Modifier.fillMaxHeight().weight(0.01f))
 
         Column(
             modifier = Modifier.fillMaxHeight().weight(0.45f),
         ) {
 
-            Spacer(modifier = Modifier.height(dimens.landingPaddingVertical))
+            Spacer(modifier = Modifier.weight(0.1f))
 
             LandingSheet(
                 modifier = Modifier
-                    .fillMaxWidth().weight(1f)
+                    .fillMaxWidth().weight(0.8f)
                     .clip(
                         RoundedCornerShape(
-                            topStart = dimens.landingSheetCorner,
+                            topStart = dimens.sheet.corner,
                             topEnd = 0.dp,
-                            bottomStart = dimens.landingSheetCorner,
+                            bottomStart = dimens.sheet.corner,
                             bottomEnd = 0.dp
                         )
                     ),
@@ -175,7 +175,7 @@ fun LandingScreenLandscape(
                 onAction = onAction
             )
 
-            Spacer(modifier = Modifier.height(dimens.landingPaddingVertical))
+            Spacer(modifier = Modifier.weight(0.1f))
         }
     }
 }
@@ -183,7 +183,7 @@ fun LandingScreenLandscape(
 @Composable
 fun LandingScreenTabletPortrait(
     modifier: Modifier = Modifier,
-    dimens: Dimens = MaterialTheme.dimen,
+    dimens: DimensLanding = MaterialTheme.dimen.landing,
     onAction: (LandingAction) -> Unit
 ) {
     Box(
@@ -204,27 +204,37 @@ fun LandingScreenTabletPortrait(
         }
 
         Column(
-            modifier = Modifier.fillMaxSize().padding(horizontal = dimens.landingPaddingVertical),
+            modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Bottom
         ) {
             Spacer(modifier = Modifier.fillMaxWidth().weight(0.78f))
-            LandingSheet(
+            Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(0.22f)
-                    .clip(
-                        RoundedCornerShape(
-                            topStart = dimens.landingSheetCorner,
-                            topEnd = dimens.landingSheetCorner,
-                            bottomStart = 0.dp,
-                            bottomEnd = 0.dp
-                        )
-                    ),
-                textAligns = TextAlign.Center,
-                titleStyle = MaterialTheme.typography.titleLarge,
-                subtitleStyle = MaterialTheme.typography.bodyLarge,
-                onAction = onAction
-            )
+            ) {
+                Spacer(modifier = Modifier.weight(0.06f))
+
+                LandingSheet(
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .weight(0.8f)
+                        .clip(
+                            RoundedCornerShape(
+                                topStart = dimens.sheet.corner,
+                                topEnd = dimens.sheet.corner,
+                                bottomStart = 0.dp,
+                                bottomEnd = 0.dp
+                            )
+                        ),
+                    textAligns = TextAlign.Center,
+                    titleStyle = MaterialTheme.typography.titleLarge,
+                    subtitleStyle = MaterialTheme.typography.bodyLarge,
+                    onAction = onAction
+                )
+
+                Spacer(modifier = Modifier.weight(0.06f))
+            }
         }
     }
 }
@@ -232,7 +242,7 @@ fun LandingScreenTabletPortrait(
 @Composable
 fun LandingSheet(
     modifier: Modifier = Modifier,
-    dimens: Dimens = MaterialTheme.dimen,
+    dimens: DimensLandingSheet = MaterialTheme.dimen.landing.sheet,
     textAligns: TextAlign? = null,
     titleStyle: TextStyle,
     subtitleStyle: TextStyle,
@@ -242,10 +252,10 @@ fun LandingSheet(
         modifier = modifier
             .background(MaterialTheme.colorScheme.surfaceContainerLowest)
             .padding(
-                start = dimens.landingSheetPaddingHorizontal,
-                end = dimens.landingSheetPaddingHorizontal,
-                top = dimens.landingSheetPaddingTop,
-                bottom = dimens.landingSheetPaddingBottom
+                start = dimens.paddingHorizontal,
+                end = dimens.paddingHorizontal,
+                top = dimens.paddingTop,
+                bottom = dimens.paddingBottom
             ),
         verticalArrangement = Arrangement.SpaceAround
     ) {
@@ -261,7 +271,7 @@ fun LandingSheet(
                 style = titleStyle
             )
 
-            Spacer(modifier = Modifier.height(dimens.landingSheetPaddingBetweenTexts))
+            Spacer(modifier = Modifier.height(dimens.spaceBetweenTexts))
 
             //Subtitle
             Text(
@@ -285,7 +295,7 @@ fun LandingSheet(
                 }
             )
 
-            Spacer(modifier = Modifier.height(dimens.landingSheetPaddingBetweenButtons))
+            Spacer(modifier = Modifier.height(dimens.spaceBetweenButtons))
 
             //Outlined button
             NoteMarkOutlinedButton(

@@ -8,25 +8,25 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import com.example.notemark.presentation.design_system.Dimens
+import com.example.notemark.presentation.design_system.DimensButtons
 import com.example.notemark.presentation.design_system.dimen
 
 @Composable
 fun NoteMarkFilledButton(
     modifier: Modifier = Modifier,
-    dimens: Dimens = MaterialTheme.dimen,
+    dimens: DimensButtons = MaterialTheme.dimen.generic.buttons,
     text: String,
     onClick: () -> Unit
 ) {
     Button(
         modifier = modifier
             .clip(
-                RoundedCornerShape(dimens.filledButtonCorner)
+                RoundedCornerShape(dimens.corner)
             ),
-        shape = RoundedCornerShape(dimens.filledButtonCorner),
+        shape = RoundedCornerShape(dimens.corner),
         contentPadding = PaddingValues(
-            horizontal = dimens.filledButtonPaddingHorizontal,
-            vertical = dimens.filledButtonPaddingVertical,
+            horizontal = dimens.paddingHorizontal,
+            vertical = dimens.paddingVertical,
         ),
         onClick = onClick
     ) {
