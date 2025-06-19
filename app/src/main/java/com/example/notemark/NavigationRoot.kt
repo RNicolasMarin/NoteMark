@@ -8,7 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.notemark.presentation.ui.Screen.*
 import com.example.notemark.presentation.ui.landing.LandingScreen
-import com.example.notemark.presentation.ui.login.LoginScreen
+import com.example.notemark.presentation.ui.login.LoginScreenRoot
 import com.example.notemark.presentation.ui.register.RegistrationScreen
 
 @Composable
@@ -41,7 +41,7 @@ fun NavigationRoot(
             )
         }
         composable<Login> {
-            LoginScreen(
+            LoginScreenRoot(
                 modifier = modifier.fillMaxSize(),
             )
         }

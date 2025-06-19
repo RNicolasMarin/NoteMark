@@ -3,6 +3,7 @@ package com.example.notemark.presentation.design_system.components
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -15,6 +16,7 @@ import com.example.notemark.presentation.design_system.dimen
 fun NoteMarkFilledButton(
     modifier: Modifier = Modifier,
     dimens: DimensButtons = MaterialTheme.dimen.generic.buttons,
+    enable: Boolean = true,
     text: String,
     onClick: () -> Unit
 ) {
@@ -28,6 +30,11 @@ fun NoteMarkFilledButton(
             horizontal = dimens.paddingHorizontal,
             vertical = dimens.paddingVertical,
         ),
+        colors = ButtonDefaults.buttonColors().copy(
+            containerColor = MaterialTheme.colorScheme.primary,
+            contentColor = MaterialTheme.colorScheme.onPrimary,
+        ),
+        enabled = enable,
         onClick = onClick
     ) {
         Text(

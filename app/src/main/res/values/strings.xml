@@ -6,4 +6,16 @@
     <string name="landing_screen_button_register">Get Started</string>
     <string name="landing_screen_button_login">Log In</string>
 
+    <string name="login_screen_title">Log In</string>
+    <string name="login_screen_subtitle">Capture your thoughts and ideas.</string>
+
+    <string name="login_screen_email_label">Email</string>
+    <string name="login_screen_email_input">john.doe@example.com</string>
+
+    <string name="login_screen_password_label">Password</string>
+    <string name="login_screen_password_input">Password</string>
+
+    <string name="login_screen_button_login">Log in</string>
+    <string name="login_screen_button_no_account">Don’t have an account?</string>
+
 </resources>

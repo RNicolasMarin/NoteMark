@@ -1,0 +1,158 @@
+package com.example.notemark.presentation.design_system.components
+
+import androidx.annotation.StringRes
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.OffsetMapping
+import androidx.compose.ui.text.input.TransformedText
+import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.unit.dp
+import com.example.notemark.R
+import com.example.notemark.presentation.design_system.DimensLabelAndInputField
+import com.example.notemark.presentation.design_system.components.ValueVisibility.*
+import com.example.notemark.presentation.design_system.dimen
+
+@Composable
+fun LabelAndInputField(
+    modifier: Modifier = Modifier,
+    dimens: DimensLabelAndInputField = MaterialTheme.dimen.generic.labelAndInputFields,
+    @StringRes labelRes: Int,
+    @StringRes placeHolder: Int,
+    value: String,
+    valueVisibility: ValueVisibility,
+    onValueChange: (String) -> Unit,
+    onIsPasswordHidden: (Boolean) -> Unit,
+) {
+    Column(
+        modifier = modifier
+            .fillMaxWidth()
+    ) {
+        Text(
+            text = stringResource(labelRes),
+            style = MaterialTheme.typography.bodyMedium
+        )
+
+        Spacer(modifier = Modifier.height(dimens.spaceBetweenLabelAndInputField))
+
+        var isFocused by remember { mutableStateOf(false) }
+
+        val borderColor = if (isFocused) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surface
+
+        val backgroundColor = if (isFocused) MaterialTheme.colorScheme.surfaceContainerLowest else MaterialTheme.colorScheme.surface
+
+        BasicTextField(
+            value = value,
+            onValueChange = onValueChange,
+            textStyle = MaterialTheme.typography.bodyLarge.copy(
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            ),
+            singleLine = true,
+
+            modifier = Modifier
+                .fillMaxWidth()
+                .onFocusChanged { isFocused = it.isFocused }
+                .border(
+                    width = 1.dp,
+                    color = borderColor,
+                    shape = RoundedCornerShape(dimens.corner)
+                )
+                .background(backgroundColor, RoundedCornerShape(dimens.corner))
+                .padding(horizontal = dimens.paddingHorizontal, vertical = dimens.paddingVertical),
+            keyboardOptions = if (valueVisibility == HIDDEN) KeyboardOptions(
+                autoCorrectEnabled = false,
+                keyboardType = KeyboardType.Password
+            ) else
+                KeyboardOptions.Default,
+            visualTransformation = if (valueVisibility == HIDDEN)
+                AsteriskPasswordVisualTransformation
+            else
+                VisualTransformation.None,
+            decorationBox = { innerTextField ->
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Box(modifier = Modifier.weight(1f)) {
+                        if (value.isEmpty()) {
+                            Text(
+                                text = stringResource(placeHolder),
+                                style = MaterialTheme.typography.bodyLarge,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
+                        }
+                        innerTextField()
+                    }
+
+                    Spacer(modifier = Modifier.height(20.dp).width(dimens.paddingHorizontal))
+
+                    when (valueVisibility) {
+                        HIDDEN -> {
+                            Icon(
+                                painter = painterResource(R.drawable.icon_eye_open),
+                                contentDescription = null,
+                                modifier = Modifier.clickable(
+                                    onClick = {
+                                        onIsPasswordHidden(false)
+                                    }
+                                )
+                            )
+                        }
+                        SHOWN -> {
+                            Icon(
+                                painter = painterResource(R.drawable.icon_eye_close),
+                                contentDescription = null,
+                                modifier = Modifier.clickable(
+                                    onClick = {
+                                        onIsPasswordHidden(true)
+                                    }
+                                )
+                            )
+                        }
+                        NONE -> Unit
+                    }
+                }
+            }
+        )
+    }
+}
+
+enum class ValueVisibility {
+    HIDDEN,
+    SHOWN,
+    NONE
+}
+
+val AsteriskPasswordVisualTransformation = VisualTransformation {
+    val transformed = "*".repeat(it.text.length)
+    TransformedText(
+        AnnotatedString(transformed),
+        OffsetMapping.Identity
+    )
+}

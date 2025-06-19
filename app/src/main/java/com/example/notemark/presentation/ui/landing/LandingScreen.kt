@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -22,8 +21,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.notemark.R
 import com.example.notemark.presentation.design_system.DimensLanding
@@ -34,6 +31,7 @@ import com.example.notemark.presentation.design_system.ScreenConfiguration
 import com.example.notemark.presentation.design_system.ScreenConfiguration.*
 import com.example.notemark.presentation.design_system.components.NoteMarkFilledButton
 import com.example.notemark.presentation.design_system.components.NoteMarkOutlinedButton
+import com.example.notemark.presentation.design_system.components.TitleAndSubtitleText
 import com.example.notemark.presentation.design_system.dimen
 import com.example.notemark.presentation.design_system.landingImageBackground
 import com.example.notemark.presentation.design_system.screenConfiguration
@@ -124,8 +122,6 @@ fun LandingScreenPortrait(
                             bottomEnd = 0.dp
                         )
                     ),
-                titleStyle = MaterialTheme.typography.titleMedium,
-                subtitleStyle = MaterialTheme.typography.bodyLarge,
                 onAction = onAction
             )
         }
@@ -170,8 +166,6 @@ fun LandingScreenLandscape(
                             bottomEnd = 0.dp
                         )
                     ),
-                titleStyle = MaterialTheme.typography.titleMedium,
-                subtitleStyle = MaterialTheme.typography.bodyLarge,
                 onAction = onAction
             )
 
@@ -227,9 +221,6 @@ fun LandingScreenTabletPortrait(
                                 bottomEnd = 0.dp
                             )
                         ),
-                    textAligns = TextAlign.Center,
-                    titleStyle = MaterialTheme.typography.titleLarge,
-                    subtitleStyle = MaterialTheme.typography.bodyLarge,
                     onAction = onAction
                 )
 
@@ -243,9 +234,6 @@ fun LandingScreenTabletPortrait(
 fun LandingSheet(
     modifier: Modifier = Modifier,
     dimens: DimensLandingSheet = MaterialTheme.dimen.landing.sheet,
-    textAligns: TextAlign? = null,
-    titleStyle: TextStyle,
-    subtitleStyle: TextStyle,
     onAction: (LandingAction) -> Unit
 ) {
     Column (
@@ -259,29 +247,12 @@ fun LandingSheet(
             ),
         verticalArrangement = Arrangement.SpaceAround
     ) {
-        Column(
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            //Title
-            Text(
-                modifier = Modifier.fillMaxWidth(),
-                text = stringResource(R.string.landing_screen_title),
-                color = MaterialTheme.colorScheme.onSurface,
-                textAlign = textAligns,
-                style = titleStyle
-            )
 
-            Spacer(modifier = Modifier.height(dimens.spaceBetweenTexts))
-
-            //Subtitle
-            Text(
-                modifier = Modifier.fillMaxWidth(),
-                text = stringResource(R.string.landing_screen_subtitle),
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                textAlign = textAligns,
-                style = subtitleStyle
-            )
-        }
+        TitleAndSubtitleText(
+            modifier = Modifier.fillMaxWidth(),
+            title = R.string.landing_screen_title,
+            subtitle = R.string.landing_screen_subtitle
+        )
 
         Column(
             modifier = Modifier.fillMaxWidth()

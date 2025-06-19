@@ -43,8 +43,8 @@ val TypographyTabletLandscape = Typography(
     titleLarge = TextStyle(
         fontFamily = SpaceGrotesk,
         fontWeight = FontWeight.Bold,
-        fontSize = 36.sp,
-        lineHeight = 40.sp,
+        fontSize = 48.sp,
+        lineHeight = 52.sp,
         letterSpacing = 0.36.sp
     ),
 

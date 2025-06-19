@@ -9,8 +9,17 @@ data class DimensButtons(
     val paddingHorizontal: Dp,
 )
 
+data class DimensLabelAndInputField(
+    val corner: Dp,
+    val paddingVertical: Dp,
+    val paddingHorizontal: Dp,
+    val spaceBetweenLabelAndInputField: Dp
+)
+
 data class DimensGeneric(
-    val buttons: DimensButtons
+    val buttons: DimensButtons,
+    val spaceBetweenTexts: Dp,
+    val labelAndInputFields: DimensLabelAndInputField
 )
 
 data class DimensLandingSheet(
@@ -18,7 +27,6 @@ data class DimensLandingSheet(
     val paddingHorizontal: Dp,
     val paddingTop: Dp,
     val paddingBottom: Dp,
-    val spaceBetweenTexts: Dp,
     val spaceBetweenButtons: Dp,
 )
 
@@ -26,9 +34,22 @@ data class DimensLanding(
     val sheet: DimensLandingSheet
 )
 
+data class DimensLoginSheet(
+    val corner: Dp,
+    val paddingHorizontal: Dp,
+    val paddingTop: Dp,
+    val paddingBottom: Dp,
+    //val spaceBetweenButtons: Dp,
+)
+
+data class DimensLogin(
+    val sheet: DimensLoginSheet
+)
+
 data class Dimens(
     val generic: DimensGeneric,
-    val landing: DimensLanding
+    val landing: DimensLanding,
+    val login: DimensLogin
 )
 
 
@@ -41,6 +62,13 @@ val dimensPortrait = Dimens(
             corner = 12.dp,//12px
             paddingVertical = 12.dp,//12px
             paddingHorizontal = 20.dp,//20px
+        ),
+        spaceBetweenTexts = 4.dp,//6px
+        labelAndInputFields = DimensLabelAndInputField(
+            corner = 12.dp,
+            paddingVertical = 12.dp,
+            paddingHorizontal = 16.dp,
+            spaceBetweenLabelAndInputField = 8.dp//7.px
         )
     ),
     landing = DimensLanding(
@@ -49,8 +77,15 @@ val dimensPortrait = Dimens(
             paddingHorizontal = 16.dp,//16px
             paddingTop = 16.dp,//32px
             paddingBottom = 16.dp, //40px
-            spaceBetweenTexts = 4.dp,//6px
             spaceBetweenButtons = 6.dp//12px
+        )
+    ),
+    login = DimensLogin(
+        sheet = DimensLoginSheet(
+            corner = 20.dp,//20px
+            paddingHorizontal = 16.dp,//16px
+            paddingTop = 16.dp,//32px
+            paddingBottom = 16.dp, //40px
         )
     )
 )
@@ -61,6 +96,13 @@ val dimensLandscape = Dimens(
             corner = 12.dp,//12px
             paddingVertical = 12.dp,//12px
             paddingHorizontal = 20.dp,//20px
+        ),
+        spaceBetweenTexts = 4.dp,//6px
+        labelAndInputFields = DimensLabelAndInputField(
+            corner = 12.dp,
+            paddingVertical = 12.dp,
+            paddingHorizontal = 16.dp,
+            spaceBetweenLabelAndInputField = 8.dp//7.px
         )
     ),
     landing = DimensLanding(
@@ -69,8 +111,15 @@ val dimensLandscape = Dimens(
             paddingHorizontal = 32.dp,//50px
             paddingTop = 20.dp,//40px
             paddingBottom = 20.dp, //40px
-            spaceBetweenTexts = 4.dp,//6px
             spaceBetweenButtons = 6.dp//12px
+        )
+    ),
+    login = DimensLogin(
+        sheet = DimensLoginSheet(
+            corner = 20.dp,//20px
+            paddingHorizontal = 32.dp,//50px
+            paddingTop = 20.dp,//40px
+            paddingBottom = 20.dp, //40px
         )
     )
 )
@@ -81,6 +130,13 @@ val dimensTabletPortrait = Dimens(
             corner = 12.dp,//12px
             paddingVertical = 12.dp,//12px
             paddingHorizontal = 20.dp,//20px
+        ),
+        spaceBetweenTexts = 4.dp,//6px
+        labelAndInputFields = DimensLabelAndInputField(
+            corner = 12.dp,
+            paddingVertical = 12.dp,
+            paddingHorizontal = 16.dp,
+            spaceBetweenLabelAndInputField = 8.dp//7.px
         )
     ),
     landing = DimensLanding(
@@ -89,8 +145,15 @@ val dimensTabletPortrait = Dimens(
             paddingHorizontal = 40.dp,//48px
             paddingTop = 20.dp,//48px
             paddingBottom = 20.dp, //48px
-            spaceBetweenTexts = 4.dp,//6px
             spaceBetweenButtons = 6.dp//12px
+        )
+    ),
+    login = DimensLogin(
+        sheet = DimensLoginSheet(
+            corner = 24.dp,//20px
+            paddingHorizontal = 120.dp,//48px
+            paddingTop = 100.dp,//48px
+            paddingBottom = 100.dp, //48px
         )
     )
 )
@@ -101,6 +164,13 @@ val dimensTabletLandscape = Dimens(
             corner = 24.dp,
             paddingVertical = 24.dp,
             paddingHorizontal = 40.dp,
+        ),
+        spaceBetweenTexts = 12.dp,
+        labelAndInputFields = DimensLabelAndInputField(
+            corner = 12.dp,
+            paddingVertical = 12.dp,
+            paddingHorizontal = 16.dp,
+            spaceBetweenLabelAndInputField = 8.dp//7.px
         )
     ),
     landing = DimensLanding(
@@ -109,8 +179,15 @@ val dimensTabletLandscape = Dimens(
             paddingHorizontal = 96.dp,
             paddingTop = 0.dp,
             paddingBottom = 0.dp,
-            spaceBetweenTexts = 12.dp,
             spaceBetweenButtons = 16.dp
+        )
+    ),
+    login = DimensLogin(
+        sheet = DimensLoginSheet(
+            corner = 40.dp,
+            paddingHorizontal = 60.dp,
+            paddingTop = 48.dp,
+            paddingBottom = 48.dp,
         )
     )
 )
