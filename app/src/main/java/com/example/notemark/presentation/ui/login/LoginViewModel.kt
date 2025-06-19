@@ -38,6 +38,7 @@ class LoginViewModel : ViewModel() {
                     isPasswordHidden = action.isPasswordHidden
                 )
             }
+            GoToRegister -> Unit
         }
     }
 

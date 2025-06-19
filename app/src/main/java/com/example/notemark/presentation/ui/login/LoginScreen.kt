@@ -24,20 +24,29 @@ import com.example.notemark.presentation.design_system.ScreenConfiguration
 import com.example.notemark.presentation.design_system.ScreenConfiguration.*
 import com.example.notemark.presentation.design_system.components.LabelAndInputField
 import com.example.notemark.presentation.design_system.components.NoteMarkFilledButton
+import com.example.notemark.presentation.design_system.components.NoteMarkTextButton
 import com.example.notemark.presentation.design_system.components.TitleAndSubtitleText
 import com.example.notemark.presentation.design_system.components.ValueVisibility.*
 import com.example.notemark.presentation.design_system.dimen
 import com.example.notemark.presentation.design_system.screenConfiguration
+import com.example.notemark.presentation.ui.login.LoginAction.GoToRegister
 
 @Composable
 fun LoginScreenRoot(
+    goToRegister: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: LoginViewModel = hiltViewModel()
 ) {
     LoginScreen(
         modifier = modifier,
         state = viewModel.state,
-        onAction = viewModel::onAction
+        onAction = { action ->
+            when (action) {
+                GoToRegister -> goToRegister()
+                else -> Unit
+            }
+            viewModel.onAction(action)
+        }
     )
 }
 
@@ -200,6 +209,14 @@ fun LoginSheetForm(
 
             }
         )
+
+        NoteMarkTextButton(
+            modifier = Modifier.fillMaxWidth(),
+            text = stringResource(R.string.login_screen_button_no_account),
+            onClick = {
+                onAction(LoginAction.GoToRegister)
+            }
+        )
     }
 
 
@@ -209,8 +226,10 @@ fun LoginSheetForm(
 @Composable
 private fun LoginScreenPreview() {
     NoteMarkTheme {
-        LoginScreenRoot(
+        LoginScreen(
             modifier = Modifier.fillMaxSize(),
+            state = LoginState(),
+            onAction = {}
         )
     }
 }

@@ -38,7 +38,7 @@ import com.example.notemark.presentation.design_system.screenConfiguration
 import com.example.notemark.presentation.ui.landing.LandingAction.*
 
 @Composable
-fun LandingScreen(
+fun LandingScreenRoot(
     goToRegister: () -> Unit,
     goToLogin: () -> Unit,
     modifier: Modifier = Modifier,
