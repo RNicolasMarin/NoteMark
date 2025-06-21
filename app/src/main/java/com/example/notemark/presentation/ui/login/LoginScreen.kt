@@ -57,31 +57,10 @@ fun LoginScreenRoot(
 fun LoginScreen(
     state: LoginState,
     modifier: Modifier = Modifier,
-    screenConfiguration: ScreenConfiguration = MaterialTheme.screenConfiguration,
     dimens: DimensGeneric = MaterialTheme.dimen.generic,
     statusBarHeight: Dp = statusBarHeight(),
     onAction: (LoginAction) -> Unit
 ) {
-    val spaceWeight: Float
-    val sheetWeight: Float
-    when (screenConfiguration) {
-        PHONE_PORTRAIT -> {
-            spaceWeight = 0.07f
-            sheetWeight = 0.93f
-        }
-        PHONE_LANDSCAPE -> {
-            spaceWeight = 0.03f
-            sheetWeight = 0.97f
-        }
-        TABLET_PORTRAIT -> {
-            spaceWeight = 0.05f
-            sheetWeight = 0.95f
-        }
-        TABLET_LANDSCAPE -> {
-            spaceWeight = 0.03f
-            sheetWeight = 0.97f
-        }
-    }
 
     Column(
         modifier = modifier
@@ -124,7 +103,7 @@ fun LoginSheet(
             bottom = dimens.sheet.paddingBottom
         )
     when (screenConfiguration) {
-        PHONE_PORTRAIT -> {
+        PHONE_PORTRAIT, TABLET_PORTRAIT -> {
             Column(
                 modifier = mod
             ) {
@@ -137,15 +116,6 @@ fun LoginSheet(
                 LoginSheetForm(
                     state = state,
                     onAction = onAction,
-                    modifier = Modifier.fillMaxWidth()
-                )
-            }
-        }
-        TABLET_PORTRAIT -> {
-            Column(
-                modifier = mod
-            ) {
-                LoginSheetText(
                     modifier = Modifier.fillMaxWidth()
                 )
             }
