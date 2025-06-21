@@ -131,9 +131,9 @@ val dimensLandscape = Dimens(
     login = DimensLogin(
         sheet = DimensLoginSheet(
             corner = 20.dp,//20px
-            paddingHorizontal = 32.dp,//50px
-            paddingTop = 20.dp,//40px
-            paddingBottom = 20.dp, //40px
+            paddingHorizontal = 40.dp,//60px
+            paddingTop = 32.dp,//32px
+            paddingBottom = 32.dp,//32px
         ),
         spaceBetweenTextAndForm = 24.dp//24px
     )

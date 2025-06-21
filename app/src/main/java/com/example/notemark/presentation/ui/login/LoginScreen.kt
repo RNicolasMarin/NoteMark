@@ -8,7 +8,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -125,7 +128,17 @@ fun LoginSheet(
                 modifier = mod
             ) {
                 LoginSheetText(
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.weight(1f)
+                )
+
+                Spacer(modifier = Modifier.width(dimens.spaceBetweenTextAndForm))
+
+                val scrollState = rememberScrollState()
+
+                LoginSheetForm(
+                    state = state,
+                    onAction = onAction,
+                    modifier = Modifier.weight(1f).verticalScroll(scrollState)
                 )
             }
         }
