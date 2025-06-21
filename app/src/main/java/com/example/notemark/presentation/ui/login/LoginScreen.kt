@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
@@ -13,9 +14,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.notemark.R
+import com.example.notemark.presentation.design_system.DimensGeneric
 import com.example.notemark.presentation.design_system.DimensLogin
 import com.example.notemark.presentation.design_system.MultiDevicePreview
 import com.example.notemark.presentation.design_system.NoteMarkButtonState
@@ -29,7 +32,7 @@ import com.example.notemark.presentation.design_system.components.TitleAndSubtit
 import com.example.notemark.presentation.design_system.components.ValueVisibility.*
 import com.example.notemark.presentation.design_system.dimen
 import com.example.notemark.presentation.design_system.screenConfiguration
-import com.example.notemark.presentation.ui.login.LoginAction.GoToRegister
+import com.example.notemark.presentation.design_system.statusBarHeight
 
 @Composable
 fun LoginScreenRoot(
@@ -42,7 +45,7 @@ fun LoginScreenRoot(
         state = viewModel.state,
         onAction = { action ->
             when (action) {
-                GoToRegister -> goToRegister()
+                LoginAction.GoToRegister -> goToRegister()
                 else -> Unit
             }
             viewModel.onAction(action)
@@ -55,6 +58,8 @@ fun LoginScreen(
     state: LoginState,
     modifier: Modifier = Modifier,
     screenConfiguration: ScreenConfiguration = MaterialTheme.screenConfiguration,
+    dimens: DimensGeneric = MaterialTheme.dimen.generic,
+    statusBarHeight: Dp = statusBarHeight(),
     onAction: (LoginAction) -> Unit
 ) {
     val spaceWeight: Float
@@ -83,13 +88,12 @@ fun LoginScreen(
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.primary),
     ) {
-        Spacer(Modifier.weight(spaceWeight))
+        Spacer(Modifier.height(statusBarHeight + dimens.spaceAfterStatsBar))
         LoginSheet(
             state = state,
             onAction = onAction,
             modifier = Modifier
-                .weight(sheetWeight)
-                .fillMaxWidth()
+                .fillMaxSize()
         )
     }
 }
@@ -127,6 +131,9 @@ fun LoginSheet(
                 LoginSheetText(
                     modifier = Modifier.fillMaxWidth()
                 )
+
+                Spacer(modifier = Modifier.height(dimens.spaceBetweenTextAndForm))
+
                 LoginSheetForm(
                     state = state,
                     onAction = onAction,
@@ -170,7 +177,8 @@ fun LoginSheetText(
 fun LoginSheetForm(
     state: LoginState,
     onAction: (LoginAction) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    dimens: DimensGeneric = MaterialTheme.dimen.generic,
 ) {
     Column(
         modifier = modifier.fillMaxWidth()
@@ -187,6 +195,8 @@ fun LoginSheetForm(
             onIsPasswordHidden = {}
         )
 
+        Spacer(modifier = Modifier.height(dimens.spaceBetweenLabelInputFields))
+
         LabelAndInputField(
             modifier = Modifier.fillMaxWidth(),
             labelRes = R.string.login_screen_password_label,
@@ -201,6 +211,8 @@ fun LoginSheetForm(
             }
         )
 
+        Spacer(modifier = Modifier.height(dimens.spaceBeforeFilledButton))
+
         NoteMarkFilledButton(
             modifier = Modifier.fillMaxWidth(),
             text = stringResource(R.string.login_screen_button_login),
@@ -209,6 +221,8 @@ fun LoginSheetForm(
 
             }
         )
+
+        Spacer(modifier = Modifier.height(dimens.spaceBeforeTextButton))
 
         NoteMarkTextButton(
             modifier = Modifier.fillMaxWidth(),

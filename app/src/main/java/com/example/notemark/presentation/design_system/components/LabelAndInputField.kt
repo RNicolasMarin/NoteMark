@@ -56,7 +56,8 @@ fun LabelAndInputField(
     ) {
         Text(
             text = stringResource(labelRes),
-            style = MaterialTheme.typography.bodyMedium
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurface
         )
 
         Spacer(modifier = Modifier.height(dimens.spaceBetweenLabelAndInputField))
