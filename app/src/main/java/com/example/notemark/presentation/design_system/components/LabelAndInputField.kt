@@ -36,7 +36,8 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import com.example.notemark.R
 import com.example.notemark.presentation.design_system.DimensLabelAndInputField
-import com.example.notemark.presentation.design_system.components.ValueVisibility.*
+import com.example.notemark.presentation.design_system.LabelAndInputFieldContent
+import com.example.notemark.presentation.design_system.LabelAndInputFieldValueVisibility.*
 import com.example.notemark.presentation.design_system.dimen
 
 @Composable
@@ -45,8 +46,7 @@ fun LabelAndInputField(
     dimens: DimensLabelAndInputField = MaterialTheme.dimen.generic.labelAndInputFields,
     @StringRes labelRes: Int,
     @StringRes placeHolder: Int,
-    value: String,
-    valueVisibility: ValueVisibility,
+    content: LabelAndInputFieldContent,
     onValueChange: (String) -> Unit,
     onIsPasswordHidden: (Boolean) -> Unit,
 ) {
@@ -69,7 +69,7 @@ fun LabelAndInputField(
         val backgroundColor = if (isFocused) MaterialTheme.colorScheme.surfaceContainerLowest else MaterialTheme.colorScheme.surface
 
         BasicTextField(
-            value = value,
+            value = content.text,
             onValueChange = onValueChange,
             textStyle = MaterialTheme.typography.bodyLarge.copy(
                 color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -86,12 +86,12 @@ fun LabelAndInputField(
                 )
                 .background(backgroundColor, RoundedCornerShape(dimens.corner))
                 .padding(horizontal = dimens.paddingHorizontal, vertical = dimens.paddingVertical),
-            keyboardOptions = if (valueVisibility == HIDDEN) KeyboardOptions(
+            keyboardOptions = if (content.visibility == HIDDEN) KeyboardOptions(
                 autoCorrectEnabled = false,
                 keyboardType = KeyboardType.Password
             ) else
                 KeyboardOptions.Default,
-            visualTransformation = if (valueVisibility == HIDDEN)
+            visualTransformation = if (content.visibility == HIDDEN)
                 AsteriskPasswordVisualTransformation
             else
                 VisualTransformation.None,
@@ -101,7 +101,7 @@ fun LabelAndInputField(
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Box(modifier = Modifier.weight(1f)) {
-                        if (value.isEmpty()) {
+                        if (content.text.isEmpty()) {
                             Text(
                                 text = stringResource(placeHolder),
                                 style = MaterialTheme.typography.bodyLarge,
@@ -113,7 +113,7 @@ fun LabelAndInputField(
 
                     Spacer(modifier = Modifier.height(20.dp).width(dimens.paddingHorizontal))
 
-                    when (valueVisibility) {
+                    when (content.visibility) {
                         HIDDEN -> {
                             Icon(
                                 painter = painterResource(R.drawable.icon_eye_open),
@@ -142,12 +142,6 @@ fun LabelAndInputField(
             }
         )
     }
-}
-
-enum class ValueVisibility {
-    HIDDEN,
-    SHOWN,
-    NONE
 }
 
 val AsteriskPasswordVisualTransformation = VisualTransformation {

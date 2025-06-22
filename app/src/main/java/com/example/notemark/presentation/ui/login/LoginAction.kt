@@ -6,7 +6,7 @@ sealed interface LoginAction {
 
     data class UpdateOnScreenPassword(val password: String): LoginAction
 
-    data class UpdatePasswordVisibility(val isPasswordHidden: Boolean): LoginAction
+    data class UpdatePasswordVisibility(val isHidden: Boolean): LoginAction
 
     data object GoToRegister: LoginAction
 }

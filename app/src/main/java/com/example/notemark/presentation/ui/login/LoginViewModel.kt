@@ -4,10 +4,17 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import com.example.notemark.domain.core.EmailValidator
+import com.example.notemark.presentation.design_system.LabelAndInputFieldValueVisibility.*
 import com.example.notemark.presentation.design_system.NoteMarkButtonState
 import com.example.notemark.presentation.ui.login.LoginAction.*
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class LoginViewModel : ViewModel() {
+@HiltViewModel
+class LoginViewModel @Inject constructor(
+    private val emailValidator: EmailValidator
+) : ViewModel() {
 
     var state by mutableStateOf(LoginState())
         private set
@@ -16,18 +23,20 @@ class LoginViewModel : ViewModel() {
         when (action) {
             is UpdateOnScreenEmail -> {
                 state = state.copy(
-                    email = action.email,
+                    email = state.email.copy(
+                        text = action.email
+                    ),
                     buttonState = getButtonState(
-                        email = action.email,
-                        password = state.password
+                        email = action.email
                     )
                 )
             }
             is UpdateOnScreenPassword -> {
                 state = state.copy(
-                    password = action.password,
+                    password = state.password.copy(
+                        text = action.password
+                    ),
                     buttonState = getButtonState(
-                        email = state.email,
                         password = action.password
                     )
                 )
@@ -35,17 +44,22 @@ class LoginViewModel : ViewModel() {
 
             is UpdatePasswordVisibility -> {
                 state = state.copy(
-                    isPasswordHidden = action.isPasswordHidden
+                    password = state.password.copy(
+                        visibility = if (action.isHidden) HIDDEN else SHOWN
+                    )
                 )
             }
             GoToRegister -> Unit
         }
     }
 
-    private fun getButtonState(email: String, password: String): NoteMarkButtonState {
+    private fun getButtonState(
+        email: String = state.email.text,
+        password: String = state.password.text,
+    ): NoteMarkButtonState {
         if (email.isBlank() || password.isBlank()) return NoteMarkButtonState.DISABLE
 
-        val isValidEmail = email.matches(Regex("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\$"))
+        val isValidEmail = emailValidator.isValidEmail(email)
         return if (isValidEmail) {
             NoteMarkButtonState.ENABLE
         } else {

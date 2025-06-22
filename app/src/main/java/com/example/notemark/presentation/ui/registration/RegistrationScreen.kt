@@ -1,4 +1,4 @@
-package com.example.notemark.presentation.ui.login
+package com.example.notemark.presentation.ui.registration
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -27,7 +27,10 @@ import com.example.notemark.presentation.design_system.MultiDevicePreview
 import com.example.notemark.presentation.design_system.NoteMarkButtonState
 import com.example.notemark.presentation.design_system.NoteMarkTheme
 import com.example.notemark.presentation.design_system.ScreenConfiguration
-import com.example.notemark.presentation.design_system.ScreenConfiguration.*
+import com.example.notemark.presentation.design_system.ScreenConfiguration.PHONE_LANDSCAPE
+import com.example.notemark.presentation.design_system.ScreenConfiguration.PHONE_PORTRAIT
+import com.example.notemark.presentation.design_system.ScreenConfiguration.TABLET_LANDSCAPE
+import com.example.notemark.presentation.design_system.ScreenConfiguration.TABLET_PORTRAIT
 import com.example.notemark.presentation.design_system.components.LabelAndInputField
 import com.example.notemark.presentation.design_system.components.NoteMarkFilledButton
 import com.example.notemark.presentation.design_system.components.NoteMarkTextButton
@@ -37,17 +40,17 @@ import com.example.notemark.presentation.design_system.screenConfiguration
 import com.example.notemark.presentation.design_system.statusBarHeight
 
 @Composable
-fun LoginScreenRoot(
-    goToRegistration: () -> Unit,
+fun RegistrationScreen(
+    goToLogin: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: LoginViewModel = hiltViewModel()
+    viewModel: RegistrationViewModel = hiltViewModel()
 ) {
-    LoginScreen(
+    RegistrationScreen(
         modifier = modifier,
         state = viewModel.state,
         onAction = { action ->
             when (action) {
-                LoginAction.GoToRegister -> goToRegistration()
+                RegistrationAction.GoToLogin -> goToLogin()
                 else -> Unit
             }
             viewModel.onAction(action)
@@ -56,12 +59,12 @@ fun LoginScreenRoot(
 }
 
 @Composable
-fun LoginScreen(
-    state: LoginState,
+fun RegistrationScreen(
+    state: RegistrationState,
     modifier: Modifier = Modifier,
     dimens: DimensGeneric = MaterialTheme.dimen.generic,
     statusBarHeight: Dp = statusBarHeight(),
-    onAction: (LoginAction) -> Unit
+    onAction: (RegistrationAction) -> Unit
 ) {
 
     Column(
@@ -70,7 +73,7 @@ fun LoginScreen(
             .background(MaterialTheme.colorScheme.primary),
     ) {
         Spacer(Modifier.height(statusBarHeight + dimens.spaceAfterStatsBar))
-        LoginSheet(
+        RegistrationSheet(
             state = state,
             onAction = onAction,
             modifier = Modifier
@@ -80,12 +83,12 @@ fun LoginScreen(
 }
 
 @Composable
-fun LoginSheet(
-    state: LoginState,
+fun RegistrationSheet(
+    state: RegistrationState,
     modifier: Modifier = Modifier,
     screenConfiguration: ScreenConfiguration = MaterialTheme.screenConfiguration,
     dimens: DimensLogin = MaterialTheme.dimen.login,
-    onAction: (LoginAction) -> Unit
+    onAction: (RegistrationAction) -> Unit
 ) {
     val mod = modifier
         .fillMaxSize()
@@ -109,13 +112,13 @@ fun LoginSheet(
             Column(
                 modifier = mod
             ) {
-                LoginSheetText(
+                RegistrationSheetText(
                     modifier = Modifier.fillMaxWidth()
                 )
 
                 Spacer(modifier = Modifier.height(dimens.spaceBetweenTextAndForm))
 
-                LoginSheetForm(
+                RegistrationSheetForm(
                     state = state,
                     onAction = onAction,
                     modifier = Modifier.fillMaxWidth()
@@ -126,7 +129,7 @@ fun LoginSheet(
             Row(
                 modifier = mod
             ) {
-                LoginSheetText(
+                RegistrationSheetText(
                     modifier = Modifier.weight(1f)
                 )
 
@@ -134,7 +137,7 @@ fun LoginSheet(
 
                 val scrollState = rememberScrollState()
 
-                LoginSheetForm(
+                RegistrationSheetForm(
                     state = state,
                     onAction = onAction,
                     modifier = Modifier.weight(1f).verticalScroll(scrollState)
@@ -145,20 +148,20 @@ fun LoginSheet(
 }
 
 @Composable
-fun LoginSheetText(
+fun RegistrationSheetText(
     modifier: Modifier = Modifier
 ) {
     TitleAndSubtitleText(
         modifier = modifier,
-        title = R.string.login_screen_title,
-        subtitle = R.string.login_screen_subtitle
+        title = R.string.registration_screen_title,
+        subtitle = R.string.registration_screen_subtitle
     )
 }
 
 @Composable
-fun LoginSheetForm(
-    state: LoginState,
-    onAction: (LoginAction) -> Unit,
+fun RegistrationSheetForm(
+    state: RegistrationState,
+    onAction: (RegistrationAction) -> Unit,
     modifier: Modifier = Modifier,
     dimens: DimensGeneric = MaterialTheme.dimen.generic,
 ) {
@@ -167,11 +170,11 @@ fun LoginSheetForm(
     ) {
         LabelAndInputField(
             modifier = Modifier.fillMaxWidth(),
-            labelRes = R.string.login_screen_email_label,
-            placeHolder = R.string.login_screen_email_input,
-            content = state.email,
+            labelRes = R.string.registration_screen_username_label,
+            placeHolder = R.string.registration_screen_username_input,
+            content = state.userName,
             onValueChange = {
-                onAction(LoginAction.UpdateOnScreenEmail(it))
+                onAction(RegistrationAction.UpdateOnScreenUserName(it))
             },
             onIsPasswordHidden = {}
         )
@@ -180,14 +183,42 @@ fun LoginSheetForm(
 
         LabelAndInputField(
             modifier = Modifier.fillMaxWidth(),
-            labelRes = R.string.login_screen_password_label,
-            placeHolder = R.string.login_screen_password_input,
+            labelRes = R.string.registration_screen_email_label,
+            placeHolder = R.string.registration_screen_email_input,
+            content = state.email,
+            onValueChange = {
+                onAction(RegistrationAction.UpdateOnScreenEmail(it))
+            },
+            onIsPasswordHidden = {}
+        )
+
+        Spacer(modifier = Modifier.height(dimens.spaceBetweenLabelInputFields))
+
+        LabelAndInputField(
+            modifier = Modifier.fillMaxWidth(),
+            labelRes = R.string.registration_screen_password_label,
+            placeHolder = R.string.registration_screen_password_input,
             content = state.password,
             onValueChange = {
-                onAction(LoginAction.UpdateOnScreenPassword(it))
+                onAction(RegistrationAction.UpdateOnScreenPassword(it))
             },
             onIsPasswordHidden = {
-                onAction(LoginAction.UpdatePasswordVisibility(it))
+                onAction(RegistrationAction.UpdatePasswordVisibility(it))
+            }
+        )
+
+        Spacer(modifier = Modifier.height(dimens.spaceBetweenLabelInputFields))
+
+        LabelAndInputField(
+            modifier = Modifier.fillMaxWidth(),
+            labelRes = R.string.registration_screen_repeat_password_label,
+            placeHolder = R.string.registration_screen_repeat_password_input,
+            content = state.repeatPassword,
+            onValueChange = {
+                onAction(RegistrationAction.UpdateOnScreenRepeatPassword(it))
+            },
+            onIsPasswordHidden = {
+                onAction(RegistrationAction.UpdateRepeatPasswordVisibility(it))
             }
         )
 
@@ -195,7 +226,7 @@ fun LoginSheetForm(
 
         NoteMarkFilledButton(
             modifier = Modifier.fillMaxWidth(),
-            text = stringResource(R.string.login_screen_button_login),
+            text = stringResource(R.string.registration_screen_button_create_account),
             enable = state.buttonState == NoteMarkButtonState.ENABLE,
             onClick = {
 
@@ -206,9 +237,9 @@ fun LoginSheetForm(
 
         NoteMarkTextButton(
             modifier = Modifier.fillMaxWidth(),
-            text = stringResource(R.string.login_screen_button_no_account),
+            text = stringResource(R.string.registration_screen_button_already_account),
             onClick = {
-                onAction(LoginAction.GoToRegister)
+                onAction(RegistrationAction.GoToLogin)
             }
         )
     }
@@ -218,11 +249,11 @@ fun LoginSheetForm(
 
 @MultiDevicePreview
 @Composable
-private fun LoginScreenPreview() {
+private fun RegistrationScreenPreview() {
     NoteMarkTheme {
-        LoginScreen(
+        RegistrationScreen(
             modifier = Modifier.fillMaxSize(),
-            state = LoginState(),
+            state = RegistrationState(),
             onAction = {}
         )
     }
