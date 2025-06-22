@@ -27,7 +27,7 @@ class RegistrationViewModel @Inject constructor(
         when (action) {
             is UpdateOnScreenUserName -> {
                 state = state.copy(
-                    userName = LabelAndInputFieldContent(
+                    userName = state.userName.copy(
                         text = action.userName
                     ),
                     buttonState = getButtonState(
@@ -37,7 +37,7 @@ class RegistrationViewModel @Inject constructor(
             }
             is UpdateOnScreenEmail -> {
                 state = state.copy(
-                    email = LabelAndInputFieldContent(
+                    email = state.email.copy(
                         text = action.email
                     ),
                     buttonState = getButtonState(

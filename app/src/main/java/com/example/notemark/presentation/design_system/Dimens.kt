@@ -13,7 +13,8 @@ data class DimensLabelAndInputField(
     val corner: Dp,
     val paddingVertical: Dp,
     val paddingHorizontal: Dp,
-    val spaceBetweenLabelAndInputField: Dp
+    val spaceBetweenLabelAndInputField: Dp,
+    val spaceToStartToMessage: Dp
 )
 
 data class DimensGeneric(
@@ -73,7 +74,8 @@ val dimensPortrait = Dimens(
             corner = 12.dp,
             paddingVertical = 12.dp,
             paddingHorizontal = 16.dp,
-            spaceBetweenLabelAndInputField = 8.dp//7.px
+            spaceBetweenLabelAndInputField = 8.dp,//7.px
+            spaceToStartToMessage = 12.dp//12.px
         ),
         spaceAfterStatsBar = 8.dp,//8px
         spaceBetweenLabelInputFields = 16.dp,//16px
@@ -112,7 +114,8 @@ val dimensLandscape = Dimens(
             corner = 12.dp,
             paddingVertical = 12.dp,
             paddingHorizontal = 16.dp,
-            spaceBetweenLabelAndInputField = 8.dp//7.px
+            spaceBetweenLabelAndInputField = 8.dp,//7.px
+            spaceToStartToMessage = 12.dp//12.px
         ),
         spaceAfterStatsBar = 8.dp,//8px
         spaceBetweenLabelInputFields = 16.dp,//16px
@@ -151,7 +154,8 @@ val dimensTabletPortrait = Dimens(
             corner = 12.dp,
             paddingVertical = 12.dp,
             paddingHorizontal = 16.dp,
-            spaceBetweenLabelAndInputField = 8.dp//7.px
+            spaceBetweenLabelAndInputField = 8.dp,//7.px
+            spaceToStartToMessage = 12.dp//12.px
         ),
         spaceAfterStatsBar = 8.dp,//8px
         spaceBetweenLabelInputFields = 16.dp,//16px
@@ -190,7 +194,8 @@ val dimensTabletLandscape = Dimens(
             corner = 12.dp,
             paddingVertical = 12.dp,
             paddingHorizontal = 16.dp,
-            spaceBetweenLabelAndInputField = 8.dp//7.px
+            spaceBetweenLabelAndInputField = 8.dp,//7.px
+            spaceToStartToMessage = 12.dp//12.px
         ),
         spaceAfterStatsBar = 8.dp,//8px
         spaceBetweenLabelInputFields = 16.dp,//16px

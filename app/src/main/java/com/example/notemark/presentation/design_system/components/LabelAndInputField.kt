@@ -39,6 +39,7 @@ import com.example.notemark.presentation.design_system.DimensLabelAndInputField
 import com.example.notemark.presentation.design_system.LabelAndInputFieldContent
 import com.example.notemark.presentation.design_system.LabelAndInputFieldValueVisibility.*
 import com.example.notemark.presentation.design_system.dimen
+import com.example.notemark.presentation.design_system.getMessageResource
 
 @Composable
 fun LabelAndInputField(
@@ -141,6 +142,22 @@ fun LabelAndInputField(
                 }
             }
         )
+
+        if (isFocused && content.supportingMessage != null) {
+            Spacer(modifier = Modifier.height(dimens.spaceBetweenLabelAndInputField))
+
+            Row(
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Spacer(modifier = Modifier.width(dimens.spaceToStartToMessage))
+
+                Text(
+                    text = stringResource(content.supportingMessage.getMessageResource()),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+        }
     }
 }
 

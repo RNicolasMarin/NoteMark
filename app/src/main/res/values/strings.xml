@@ -19,10 +19,12 @@
     <string name="registration_screen_subtitle">Capture your thoughts and ideas.</string>
     <string name="registration_screen_username_label">Username</string>
     <string name="registration_screen_username_input">John.doe</string>
+    <string name="registration_screen_username_support">Use between 3 and 20 characters for your username</string>
     <string name="registration_screen_email_label">Email</string>
     <string name="registration_screen_email_input">john.doe@example.com</string>
     <string name="registration_screen_password_label">Password</string>
     <string name="registration_screen_password_input">Password</string>
+    <string name="registration_screen_password_support">Use 8+ characters with a number or symbol for better security</string>
     <string name="registration_screen_repeat_password_label">Repeat password</string>
     <string name="registration_screen_repeat_password_input">Password</string>
     <string name="registration_screen_button_create_account">Create account</string>
