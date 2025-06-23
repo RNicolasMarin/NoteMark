@@ -107,10 +107,13 @@ fun RegistrationSheet(
             top = dimens.sheet.paddingTop,
             bottom = dimens.sheet.paddingBottom
         )
+
+    val scrollState = rememberScrollState()
+
     when (screenConfiguration) {
         PHONE_PORTRAIT, TABLET_PORTRAIT -> {
             Column(
-                modifier = mod
+                modifier = mod.verticalScroll(scrollState)
             ) {
                 RegistrationSheetText(
                     modifier = Modifier.fillMaxWidth()
@@ -134,8 +137,6 @@ fun RegistrationSheet(
                 )
 
                 Spacer(modifier = Modifier.width(dimens.spaceBetweenTextAndForm))
-
-                val scrollState = rememberScrollState()
 
                 RegistrationSheetForm(
                     state = state,
@@ -166,7 +167,8 @@ fun RegistrationSheetForm(
     dimens: DimensGeneric = MaterialTheme.dimen.generic,
 ) {
     Column(
-        modifier = modifier.fillMaxWidth()
+        modifier = modifier
+            .fillMaxWidth()
     ) {
         LabelAndInputField(
             modifier = Modifier.fillMaxWidth(),

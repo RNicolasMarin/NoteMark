@@ -26,6 +26,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
@@ -37,7 +38,9 @@ import androidx.compose.ui.unit.dp
 import com.example.notemark.R
 import com.example.notemark.presentation.design_system.DimensLabelAndInputField
 import com.example.notemark.presentation.design_system.LabelAndInputFieldContent
+import com.example.notemark.presentation.design_system.LabelAndInputFieldValueVisibility
 import com.example.notemark.presentation.design_system.LabelAndInputFieldValueVisibility.*
+import com.example.notemark.presentation.design_system.components.LabelAndInputFieldMessageState.*
 import com.example.notemark.presentation.design_system.dimen
 import com.example.notemark.presentation.design_system.getMessageResource
 
@@ -65,9 +68,22 @@ fun LabelAndInputField(
 
         var isFocused by remember { mutableStateOf(false) }
 
-        val borderColor = if (isFocused) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surface
+        val state = when {
+            content.errorMessage != null && content.text.isNotEmpty() -> ERROR
+            isFocused -> SUPPORT
+            else -> NOT_FOCUSED
+        }
 
-        val backgroundColor = if (isFocused) MaterialTheme.colorScheme.surfaceContainerLowest else MaterialTheme.colorScheme.surface
+        val borderColor = when (state) {
+            ERROR -> MaterialTheme.colorScheme.error
+            SUPPORT -> MaterialTheme.colorScheme.primary
+            NOT_FOCUSED -> MaterialTheme.colorScheme.surface
+        }
+
+        val backgroundColor = when (state) {
+            ERROR, SUPPORT -> MaterialTheme.colorScheme.surfaceContainerLowest
+            NOT_FOCUSED -> MaterialTheme.colorScheme.surface
+        }
 
         BasicTextField(
             value = content.text,
@@ -75,6 +91,7 @@ fun LabelAndInputField(
             textStyle = MaterialTheme.typography.bodyLarge.copy(
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             ),
+            cursorBrush = SolidColor(borderColor),
             singleLine = true,
 
             modifier = Modifier
@@ -112,7 +129,7 @@ fun LabelAndInputField(
                         innerTextField()
                     }
 
-                    Spacer(modifier = Modifier.height(20.dp).width(dimens.paddingHorizontal))
+                    Spacer(modifier = Modifier.width(dimens.paddingHorizontal))
 
                     when (content.visibility) {
                         HIDDEN -> {
@@ -143,7 +160,13 @@ fun LabelAndInputField(
             }
         )
 
-        if (isFocused && content.supportingMessage != null) {
+        var message = when {
+            state == ERROR -> content.errorMessage
+            state == SUPPORT && content.supportingMessage != null -> content.supportingMessage
+            else -> null
+        }
+
+        if (message != null) {
             Spacer(modifier = Modifier.height(dimens.spaceBetweenLabelAndInputField))
 
             Row(
@@ -152,10 +175,11 @@ fun LabelAndInputField(
                 Spacer(modifier = Modifier.width(dimens.spaceToStartToMessage))
 
                 Text(
-                    text = stringResource(content.supportingMessage.getMessageResource()),
+                    text = stringResource(message.getMessageResource()),
                     style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                    color = if (state == ERROR) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurfaceVariant
                 )
+
             }
         }
     }
@@ -167,4 +191,10 @@ val AsteriskPasswordVisualTransformation = VisualTransformation {
         AnnotatedString(transformed),
         OffsetMapping.Identity
     )
+}
+
+enum class LabelAndInputFieldMessageState {
+    ERROR,
+    SUPPORT,
+    NOT_FOCUSED
 }

@@ -20,13 +20,18 @@
     <string name="registration_screen_username_label">Username</string>
     <string name="registration_screen_username_input">John.doe</string>
     <string name="registration_screen_username_support">Use between 3 and 20 characters for your username</string>
+    <string name="registration_screen_username_error_at_least_3_characters">Username must be at least 3 characters.</string>
+    <string name="registration_screen_username_error_at_most_20_characters">Username can\'t be longer than 20 characters.</string>
     <string name="registration_screen_email_label">Email</string>
     <string name="registration_screen_email_input">john.doe@example.com</string>
+    <string name="registration_screen_email_error_invalid">Invalid email provided</string>
     <string name="registration_screen_password_label">Password</string>
     <string name="registration_screen_password_input">Password</string>
     <string name="registration_screen_password_support">Use 8+ characters with a number or symbol for better security</string>
+    <string name="registration_screen_password_error">Password must be at least 8 characters and include a number or symbol.</string>
     <string name="registration_screen_repeat_password_label">Repeat password</string>
     <string name="registration_screen_repeat_password_input">Password</string>
+    <string name="registration_screen_repeat_password_error">Passwords do not match.</string>
     <string name="registration_screen_button_create_account">Create account</string>
     <string name="registration_screen_button_already_account">Already have an account?</string>
 

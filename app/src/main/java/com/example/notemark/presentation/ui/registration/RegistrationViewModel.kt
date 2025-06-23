@@ -6,10 +6,14 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.example.notemark.domain.core.EmailValidator
 import com.example.notemark.domain.core.PasswordValidator
-import com.example.notemark.presentation.design_system.LabelAndInputFieldContent
+import com.example.notemark.presentation.design_system.EmailInvalid
 import com.example.notemark.presentation.design_system.LabelAndInputFieldValueVisibility.HIDDEN
 import com.example.notemark.presentation.design_system.LabelAndInputFieldValueVisibility.SHOWN
 import com.example.notemark.presentation.design_system.NoteMarkButtonState
+import com.example.notemark.presentation.design_system.PasswordAtLeastEightCharactersWithNumberOrSymbol
+import com.example.notemark.presentation.design_system.RepeatPasswordDoNotMatch
+import com.example.notemark.presentation.design_system.UserNameAtLeastThreeCharacters
+import com.example.notemark.presentation.design_system.UserNameAtMostTwentyCharacters
 import com.example.notemark.presentation.ui.registration.RegistrationAction.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -29,41 +33,33 @@ class RegistrationViewModel @Inject constructor(
                 state = state.copy(
                     userName = state.userName.copy(
                         text = action.userName
-                    ),
-                    buttonState = getButtonState(
-                        userName = action.userName
                     )
                 )
+                updateButtonStateAndErrors(userName = action.userName)
             }
             is UpdateOnScreenEmail -> {
                 state = state.copy(
                     email = state.email.copy(
                         text = action.email
-                    ),
-                    buttonState = getButtonState(
-                        email = action.email
                     )
                 )
+                updateButtonStateAndErrors(email = action.email)
             }
             is UpdateOnScreenPassword -> {
                 state = state.copy(
                     password = state.password.copy(
                         text = action.password
-                    ),
-                    buttonState = getButtonState(
-                        password = action.password
                     )
                 )
+                updateButtonStateAndErrors(password = action.password)
             }
             is UpdateOnScreenRepeatPassword -> {
                 state = state.copy(
                     repeatPassword = state.repeatPassword.copy(
                         text = action.repeatPassword
-                    ),
-                    buttonState = getButtonState(
-                        repeatPassword = action.repeatPassword
                     )
                 )
+                updateButtonStateAndErrors(repeatPassword = action.repeatPassword)
             }
             is UpdatePasswordVisibility -> {
                 state = state.copy(
@@ -83,23 +79,54 @@ class RegistrationViewModel @Inject constructor(
         }
     }
 
-    private fun getButtonState(
+    private fun updateButtonStateAndErrors(
         userName: String = state.userName.text,
         email: String = state.email.text,
         password: String = state.password.text,
         repeatPassword: String = state.repeatPassword.text,
-    ): NoteMarkButtonState {
+    ) {
+        val userNameError = when {
+            userName.length < 3 -> UserNameAtLeastThreeCharacters
+            userName.length > 20 -> UserNameAtMostTwentyCharacters
+            else -> null
+        }
 
-        val isValidUserName = userName.length in (3..20)
-        val isValidEmail = emailValidator.isValidEmail(email)
-        val isValidPassword = passwordValidator.isValidPassword(password)
-        val isValidRepeatPassword = password == repeatPassword
+        val emailError = when {
+            !emailValidator.isValidEmail(email) -> EmailInvalid
+            else -> null
+        }
 
-        return if (isValidUserName && isValidEmail && isValidPassword && isValidRepeatPassword) {
+        val passwordError = when {
+            !passwordValidator.isValidPassword(password) -> PasswordAtLeastEightCharactersWithNumberOrSymbol
+            else -> null
+        }
+
+        val repeatPasswordError = when {
+            password != repeatPassword -> RepeatPasswordDoNotMatch
+            else -> null
+        }
+
+        val buttonState = if (userNameError == null && emailError == null && passwordError == null && repeatPasswordError == null) {
             NoteMarkButtonState.ENABLE
         } else {
             NoteMarkButtonState.DISABLE
         }
+
+        state = state.copy(
+            userName = state.userName.copy(
+                errorMessage = userNameError
+            ),
+            email = state.email.copy(
+                errorMessage = emailError
+            ),
+            password = state.password.copy(
+                errorMessage = passwordError
+            ),
+            repeatPassword = state.repeatPassword.copy(
+                errorMessage = repeatPasswordError
+            ),
+            buttonState = buttonState
+        )
     }
 
 }
