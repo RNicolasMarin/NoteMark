@@ -34,5 +34,12 @@
     <string name="registration_screen_repeat_password_error">Passwords do not match.</string>
     <string name="registration_screen_button_create_account">Create account</string>
     <string name="registration_screen_button_already_account">Already have an account?</string>
+    <string name="registration_screen_error_format">There\'s been a Format Error.</string>
+    <string name="registration_screen_error_authorization">Incorrect Email/Password.</string>
+    <string name="registration_screen_error_request">There\'s been a Request Error.</string>
+    <string name="registration_screen_error_conflict">Already used Email.</string>
+    <string name="registration_screen_error_too_many_requests">Too many request. Try again later.</string>
+    <string name="registration_screen_error_unknown">There\'s been an Unknown Error.</string>
+    <string name="registration_screen_registration_successful">Account created</string>
 
 </resources>

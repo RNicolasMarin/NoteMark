@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.daggerHilt)
     alias(libs.plugins.devtoolsKsp)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.kotlin.parcelize)
 }
 
 android {

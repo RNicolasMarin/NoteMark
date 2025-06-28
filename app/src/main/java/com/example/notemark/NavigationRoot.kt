@@ -6,10 +6,11 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.toRoute
 import com.example.notemark.presentation.ui.Screen.*
 import com.example.notemark.presentation.ui.landing.LandingScreenRoot
 import com.example.notemark.presentation.ui.login.LoginScreenRoot
-import com.example.notemark.presentation.ui.registration.RegistrationScreen
+import com.example.notemark.presentation.ui.registration.RegistrationScreenRoot
 
 @Composable
 fun NavigationRoot(
@@ -41,8 +42,10 @@ fun NavigationRoot(
             )
         }
         composable<Login> {
+            val args = it.toRoute<Login>()
             LoginScreenRoot(
                 modifier = modifier.fillMaxSize(),
+                messageRes = args.messageRes,
                 goToRegistration = {
                     navController.navigate(Registration) {
                         popUpTo(Login) {
@@ -53,10 +56,10 @@ fun NavigationRoot(
             )
         }
         composable<Registration> {
-            RegistrationScreen(
+            RegistrationScreenRoot(
                 modifier = modifier.fillMaxSize(),
-                goToLogin = {
-                    navController.navigate(Login) {
+                goToLogin = { messageRes ->
+                    navController.navigate(Login(messageRes = messageRes)) {
                         popUpTo(Registration) {
                             inclusive = true
                         }

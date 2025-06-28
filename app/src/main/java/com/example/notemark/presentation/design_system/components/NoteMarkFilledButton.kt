@@ -4,19 +4,21 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import com.example.notemark.presentation.design_system.DimensButtons
+import com.example.notemark.presentation.design_system.NoteMarkButtonState
 import com.example.notemark.presentation.design_system.dimen
 
 @Composable
 fun NoteMarkFilledButton(
     modifier: Modifier = Modifier,
     dimens: DimensButtons = MaterialTheme.dimen.generic.buttons,
-    enable: Boolean = true,
+    buttonState: NoteMarkButtonState = NoteMarkButtonState.ENABLE,
     text: String,
     onClick: () -> Unit
 ) {
@@ -34,13 +36,16 @@ fun NoteMarkFilledButton(
             containerColor = MaterialTheme.colorScheme.primary,
             contentColor = MaterialTheme.colorScheme.onPrimary,
         ),
-        enabled = enable,
+        enabled = buttonState == NoteMarkButtonState.ENABLE,
         onClick = onClick
     ) {
-        Text(
-            text = text,
-            style = MaterialTheme.typography.titleSmall
-
-        )
+        if (buttonState == NoteMarkButtonState.LOADING) {
+            CircularProgressIndicator()
+        } else {
+            Text(
+                text = text,
+                style = MaterialTheme.typography.titleSmall
+            )
+        }
     }
 }

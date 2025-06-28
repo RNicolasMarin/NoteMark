@@ -16,14 +16,14 @@ data class RegistrationState(
 )
 
 val defaultUserName = LabelAndInputFieldContent(
-    supportingMessage = UserNameThreeToTwentyCharacters
+    supportingMessage = UserNameThreeToTwentyCharacters,
 )
 
 val defaultPassword = LabelAndInputFieldContent(
     visibility = HIDDEN,
-    supportingMessage = PasswordEightPlusCharactersWithNumberOrSymbol
+    supportingMessage = PasswordEightPlusCharactersWithNumberOrSymbol,
 )
 
 val defaultRepeatPassword = LabelAndInputFieldContent(
-    visibility = HIDDEN
+    visibility = HIDDEN,
 )

@@ -48,6 +48,7 @@ import com.example.notemark.presentation.design_system.getMessageResource
 fun LabelAndInputField(
     modifier: Modifier = Modifier,
     dimens: DimensLabelAndInputField = MaterialTheme.dimen.generic.labelAndInputFields,
+    enable: Boolean = true,
     @StringRes labelRes: Int,
     @StringRes placeHolder: Int,
     content: LabelAndInputFieldContent,
@@ -91,6 +92,7 @@ fun LabelAndInputField(
             textStyle = MaterialTheme.typography.bodyLarge.copy(
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             ),
+            enabled = enable,
             cursorBrush = SolidColor(borderColor),
             singleLine = true,
 

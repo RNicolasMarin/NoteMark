@@ -8,7 +8,9 @@ sealed class Screen {
     data object Landing: Screen()
 
     @Serializable
-    data object Login: Screen()
+    data class Login(
+        val messageRes: Int
+    ): Screen()
 
     @Serializable
     data object Registration: Screen()

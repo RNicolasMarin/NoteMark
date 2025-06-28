@@ -49,7 +49,7 @@ class LoginViewModel @Inject constructor(
                     )
                 )
             }
-            GoToRegister -> Unit
+            GoToRegister, ClearMessage -> Unit
         }
     }
 

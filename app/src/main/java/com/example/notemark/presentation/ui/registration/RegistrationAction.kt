@@ -15,4 +15,8 @@ sealed interface RegistrationAction {
     data class UpdateRepeatPasswordVisibility(val isHidden: Boolean): RegistrationAction
 
     data object GoToLogin: RegistrationAction
+
+    data object CreateAccount: RegistrationAction
+
+    data object ClearMessage: RegistrationAction
 }

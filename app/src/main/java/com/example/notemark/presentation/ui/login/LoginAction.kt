@@ -9,4 +9,6 @@ sealed interface LoginAction {
     data class UpdatePasswordVisibility(val isHidden: Boolean): LoginAction
 
     data object GoToRegister: LoginAction
+
+    data object ClearMessage: LoginAction
 }
