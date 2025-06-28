@@ -7,6 +7,6 @@ interface RegistrationEvent {
     data object RegistrationSuccess: RegistrationEvent
 
     data class RegistrationError(
-        val error: NoteMarkResult.Error<*>
+        val error: NoteMarkResult.Error
     ): RegistrationEvent
 }

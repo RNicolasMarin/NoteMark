@@ -11,4 +11,6 @@ sealed interface LoginAction {
     data object GoToRegister: LoginAction
 
     data object ClearMessage: LoginAction
+
+    data object LoginAccount: LoginAction
 }

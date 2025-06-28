@@ -14,4 +14,7 @@ sealed class Screen {
 
     @Serializable
     data object Registration: Screen()
+
+    @Serializable
+    data object Notes: Screen()
 }

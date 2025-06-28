@@ -10,6 +10,7 @@ import androidx.navigation.toRoute
 import com.example.notemark.presentation.ui.Screen.*
 import com.example.notemark.presentation.ui.landing.LandingScreenRoot
 import com.example.notemark.presentation.ui.login.LoginScreenRoot
+import com.example.notemark.presentation.ui.notes.NotesScreen
 import com.example.notemark.presentation.ui.registration.RegistrationScreenRoot
 
 @Composable
@@ -26,17 +27,13 @@ fun NavigationRoot(
             LandingScreenRoot(
                 modifier = modifier.fillMaxSize(),
                 goToLogin = {
-                    navController.navigate(Login) {
-                        popUpTo(Landing) {
-                            inclusive = true
-                        }
+                    navController.navigate(Login(messageRes = -1)) {
+                        popUpTo(0) { inclusive = true }
                     }
                 },
                 goToRegister = {
                     navController.navigate(Registration) {
-                        popUpTo(Landing) {
-                            inclusive = true
-                        }
+                        popUpTo(0) { inclusive = true }
                     }
                 }
             )
@@ -48,9 +45,12 @@ fun NavigationRoot(
                 messageRes = args.messageRes,
                 goToRegistration = {
                     navController.navigate(Registration) {
-                        popUpTo(Login) {
-                            inclusive = true
-                        }
+                        popUpTo(0) { inclusive = true }
+                    }
+                },
+                goToNotes = {
+                    navController.navigate(Notes) {
+                        popUpTo(0) { inclusive = true }
                     }
                 }
             )
@@ -60,12 +60,13 @@ fun NavigationRoot(
                 modifier = modifier.fillMaxSize(),
                 goToLogin = { messageRes ->
                     navController.navigate(Login(messageRes = messageRes)) {
-                        popUpTo(Registration) {
-                            inclusive = true
-                        }
+                        popUpTo(0) { inclusive = true }
                     }
                 }
             )
+        }
+        composable<Notes> {
+            NotesScreen()
         }
     }
 }

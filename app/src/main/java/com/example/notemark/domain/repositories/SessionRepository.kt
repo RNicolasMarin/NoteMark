@@ -1,6 +1,7 @@
 package com.example.notemark.domain.repositories
 
 import com.example.notemark.domain.NoteMarkResult
+import com.example.notemark.domain.model.Tokens
 
 interface SessionRepository {
 
@@ -9,5 +10,10 @@ interface SessionRepository {
         email: String,
         password: String
     ): NoteMarkResult<Unit>
+
+    suspend fun login(
+        email: String,
+        password: String
+    ): NoteMarkResult<Tokens>
 
 }

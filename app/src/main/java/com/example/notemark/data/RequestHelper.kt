@@ -3,7 +3,7 @@ package com.example.notemark.data
 import com.example.notemark.domain.NoteMarkResult
 import retrofit2.Response
 
-suspend fun <T>makeRequest(request: suspend() -> Response<out T?>): NoteMarkResult<out T> {
+suspend fun <T>makeRequest(request: suspend() -> Response<out T?>): NoteMarkResult<T> {
     return try {
         val result = request()
         if (result.isSuccessful) {

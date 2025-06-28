@@ -76,6 +76,7 @@ fun RegistrationScreenRoot(
                     ConflictError -> R.string.registration_screen_error_conflict
                     TooManyRequestError -> R.string.registration_screen_error_too_many_requests
                     UnknownError -> R.string.registration_screen_error_unknown
+                    UnexpectedResponseError -> -1
                 }
                 snackBarMessageRes = messageRes
             }
@@ -116,7 +117,6 @@ fun RegistrationScreen(
             scope.launch {
                 snackBarHostState.showSnackbar(
                     message = message,
-                    actionLabel = "Undo",
                     duration = SnackbarDuration.Short
                 )
                 onAction(ClearMessage)

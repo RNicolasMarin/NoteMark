@@ -35,7 +35,9 @@ import com.example.notemark.R
 import com.example.notemark.presentation.design_system.DimensGeneric
 import com.example.notemark.presentation.design_system.DimensLogin
 import com.example.notemark.presentation.design_system.MultiDevicePreview
+import com.example.notemark.presentation.design_system.NoteMarkButtonState
 import com.example.notemark.presentation.design_system.NoteMarkTheme
+import com.example.notemark.presentation.design_system.ObserveAsEvents
 import com.example.notemark.presentation.design_system.ScreenConfiguration
 import com.example.notemark.presentation.design_system.ScreenConfiguration.*
 import com.example.notemark.presentation.design_system.components.LabelAndInputField
@@ -46,16 +48,31 @@ import com.example.notemark.presentation.design_system.dimen
 import com.example.notemark.presentation.design_system.screenConfiguration
 import com.example.notemark.presentation.design_system.statusBarHeight
 import com.example.notemark.presentation.ui.login.LoginAction.*
+import com.example.notemark.presentation.ui.login.LoginEvent.LoginError
+import com.example.notemark.presentation.ui.login.LoginEvent.LoginSuccess
 import kotlinx.coroutines.launch
 
 @Composable
 fun LoginScreenRoot(
     goToRegistration: () -> Unit,
+    goToNotes: () -> Unit,
     modifier: Modifier = Modifier,
     messageRes: Int,
     viewModel: LoginViewModel = hiltViewModel()
 ) {
     var snackBarMessageRes by remember { mutableIntStateOf(messageRes) }
+
+    ObserveAsEvents(viewModel.events) { event ->
+        when (event) {
+            is LoginSuccess -> {
+                goToNotes()
+            }
+            is LoginError -> {
+                val messageRes = R.string.login_screen_error
+                snackBarMessageRes = messageRes
+            }
+        }
+    }
 
     LoginScreen(
         modifier = modifier,
@@ -92,7 +109,6 @@ fun LoginScreen(
             scope.launch {
                 snackBarHostState.showSnackbar(
                     message = message,
-                    actionLabel = "Undo",
                     duration = SnackbarDuration.Short
                 )
                 onAction(ClearMessage)
@@ -213,13 +229,15 @@ fun LoginSheetForm(
     Column(
         modifier = modifier.fillMaxWidth()
     ) {
+        val fieldEnables = state.buttonState != NoteMarkButtonState.LOADING
         LabelAndInputField(
             modifier = Modifier.fillMaxWidth(),
             labelRes = R.string.login_screen_email_label,
             placeHolder = R.string.login_screen_email_input,
             content = state.email,
+            enable = fieldEnables,
             onValueChange = {
-                onAction(LoginAction.UpdateOnScreenEmail(it))
+                onAction(UpdateOnScreenEmail(it))
             },
             onIsPasswordHidden = {}
         )
@@ -231,11 +249,12 @@ fun LoginSheetForm(
             labelRes = R.string.login_screen_password_label,
             placeHolder = R.string.login_screen_password_input,
             content = state.password,
+            enable = fieldEnables,
             onValueChange = {
-                onAction(LoginAction.UpdateOnScreenPassword(it))
+                onAction(UpdateOnScreenPassword(it))
             },
             onIsPasswordHidden = {
-                onAction(LoginAction.UpdatePasswordVisibility(it))
+                onAction(UpdatePasswordVisibility(it))
             }
         )
 
@@ -246,7 +265,7 @@ fun LoginSheetForm(
             text = stringResource(R.string.login_screen_button_login),
             buttonState = state.buttonState,
             onClick = {
-
+                onAction(LoginAccount)
             }
         )
 
