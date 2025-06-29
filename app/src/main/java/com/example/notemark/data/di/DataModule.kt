@@ -1,5 +1,7 @@
 package com.example.notemark.data.di
 
+import android.content.Context
+import android.content.SharedPreferences
 import com.example.notemark.data.Constants
 import com.example.notemark.data.Constants.API_EMAIL
 import com.example.notemark.data.remote.services.SessionService
@@ -8,6 +10,7 @@ import com.example.notemark.domain.repositories.SessionRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -54,7 +57,15 @@ object DataModule {
     }
 
     @Provides
-    fun provideSessionRepository(service: SessionService): SessionRepository {
-        return SessionRepositoryImpl(service)
+    fun provideSessionRepository(
+        service: SessionService,
+        preferences: SharedPreferences
+    ): SessionRepository {
+        return SessionRepositoryImpl(service, preferences)
+    }
+
+    @Provides
+    fun provideSharedPreferences(@ApplicationContext appContext: Context): SharedPreferences {
+        return appContext.getSharedPreferences("my_prefs", Context.MODE_PRIVATE)
     }
 }

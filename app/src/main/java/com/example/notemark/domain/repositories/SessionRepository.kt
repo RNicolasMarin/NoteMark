@@ -16,4 +16,6 @@ interface SessionRepository {
         password: String
     ): NoteMarkResult<Tokens>
 
+    suspend fun saveTokens(tokens: Tokens)
+
 }

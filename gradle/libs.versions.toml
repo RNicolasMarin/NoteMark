@@ -16,6 +16,7 @@ navigationCompose = "2.8.0-alpha08"
 hilt = "2.50"
 hiltNavigationCompose = "1.2.0"
 retrofit = "2.9.0"
+gson = "2.10.1"
 
 
 [libraries]
@@ -44,6 +45,7 @@ hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt"
 hilt-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt" }
 logging-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "loggingInterceptor" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

@@ -3,7 +3,9 @@ package com.example.notemark.data
 import com.example.notemark.domain.NoteMarkResult
 import retrofit2.Response
 
-suspend fun <T>makeRequest(request: suspend() -> Response<out T?>): NoteMarkResult<T> {
+suspend fun <T>makeRequest(
+    request: suspend() -> Response<out T?>
+): NoteMarkResult<T> {
     return try {
         val result = request()
         if (result.isSuccessful) {
@@ -29,3 +31,11 @@ suspend fun <T>makeRequest(request: suspend() -> Response<out T?>): NoteMarkResu
     }
 
 }
+
+//login
+//get tokens response
+//save the token locally
+//add token from preference in each request
+//  if the access token is invalid i get 401. use the refresh endpoint and the refresh token to get a new Tokens (save locally) and retry the request
+
+//if the refresh token expires (in any request) the session expires (code 401). The user is logout, local tokens is cleared and with a login you get a new one.
