@@ -70,7 +70,7 @@ fun LabelAndInputField(
         var isFocused by remember { mutableStateOf(false) }
 
         val state = when {
-            content.errorMessage != null && content.text.isNotEmpty() -> ERROR
+            content.errorMessage != null && content.text.isNotEmpty() && !isFocused -> ERROR
             isFocused -> SUPPORT
             else -> NOT_FOCUSED
         }
@@ -162,7 +162,7 @@ fun LabelAndInputField(
             }
         )
 
-        var message = when {
+        val message = when {
             state == ERROR -> content.errorMessage
             state == SUPPORT && content.supportingMessage != null -> content.supportingMessage
             else -> null

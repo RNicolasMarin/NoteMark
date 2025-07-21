@@ -1,8 +1,10 @@
 package com.example.notemark.domain.core
 
+import android.util.Patterns.EMAIL_ADDRESS
+
 class EmailValidatorImpl: EmailValidator {
 
     override fun isValidEmail(email: String): Boolean {
-        return email.matches(Regex("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\$"))
+        return EMAIL_ADDRESS.matcher(email).matches()
     }
 }
