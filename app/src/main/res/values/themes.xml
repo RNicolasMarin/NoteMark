@@ -7,6 +7,6 @@
         <item name="windowSplashScreenBackground">@color/blue</item>
         <item name="postSplashScreenTheme">@style/Theme.NoteMark</item>
         <item name="windowSplashScreenAnimationDuration">1000</item>
-        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/splash_screen_icon</item>
     </style>
 </resources>
