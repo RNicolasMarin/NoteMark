@@ -36,60 +36,44 @@ import com.example.notemark.core.presentation.designsystem.dimen
 import com.example.notemark.core.presentation.designsystem.landingImageBackground
 import com.example.notemark.core.presentation.designsystem.screenConfiguration
 import com.example.notemark.auth.presentation.landing.LandingAction.*
+import com.example.notemark.core.presentation.designsystem.RootComposable
 
 @Composable
 fun LandingScreenRoot(
     onRegisterClick: () -> Unit,
-    onLoginClick: () -> Unit,
-    modifier: Modifier = Modifier,
+    onLoginClick: () -> Unit
 ) {
-    LandingScreen(
-        modifier = modifier,
-        onAction = { action ->
-            when (action) {
-                OnLoginClick -> onLoginClick()
-                OnRegisterClick -> onRegisterClick()
+    RootComposable {
+        LandingScreen(
+            onAction = { action ->
+                when (action) {
+                    OnLoginClick -> onLoginClick()
+                    OnRegisterClick -> onRegisterClick()
+                }
             }
-        }
-    )
+        )
+    }
 }
 
 @Composable
 fun LandingScreen(
-    modifier: Modifier = Modifier,
     screenConfiguration: ScreenConfiguration = MaterialTheme.screenConfiguration,
     onAction: (LandingAction) -> Unit
 ) {
     when (screenConfiguration) {
-        PHONE_PORTRAIT -> {
-            LandingScreenPortrait(
-                modifier = modifier,
-                onAction = onAction
-            )
-        }
-        TABLET_PORTRAIT -> {
-            LandingScreenTabletPortrait(
-                modifier = modifier,
-                onAction = onAction
-            )
-        }
-        PHONE_LANDSCAPE, TABLET_LANDSCAPE -> {
-            LandingScreenLandscape(
-                modifier = modifier,
-                onAction = onAction
-            )
-        }
+        PHONE_PORTRAIT -> LandingScreenPortrait(onAction = onAction)
+        TABLET_PORTRAIT -> LandingScreenTabletPortrait(onAction = onAction)
+        PHONE_LANDSCAPE, TABLET_LANDSCAPE -> LandingScreenLandscape(onAction = onAction)
     }
 }
 
 @Composable
 fun LandingScreenPortrait(
-    modifier: Modifier = Modifier,
     dimens: DimensLanding = MaterialTheme.dimen.landing,
     onAction: (LandingAction) -> Unit
 ) {
     Box(
-        modifier = modifier.fillMaxSize().background(landingImageBackground),
+        modifier = Modifier.fillMaxSize().background(landingImageBackground),
     ) {
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -130,12 +114,11 @@ fun LandingScreenPortrait(
 
 @Composable
 fun LandingScreenLandscape(
-    modifier: Modifier = Modifier,
     dimens: DimensLanding = MaterialTheme.dimen.landing,
     onAction: (LandingAction) -> Unit
 ) {
     Row(
-        modifier = modifier.fillMaxSize().background(landingImageBackground),
+        modifier = Modifier.fillMaxSize().background(landingImageBackground),
     ) {
         Spacer(modifier = Modifier.fillMaxHeight().weight(0.01f))
 
@@ -176,12 +159,11 @@ fun LandingScreenLandscape(
 
 @Composable
 fun LandingScreenTabletPortrait(
-    modifier: Modifier = Modifier,
     dimens: DimensLanding = MaterialTheme.dimen.landing,
     onAction: (LandingAction) -> Unit
 ) {
     Box(
-        modifier = modifier.fillMaxSize().background(landingImageBackground),
+        modifier = Modifier.fillMaxSize().background(landingImageBackground),
     ) {
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -286,7 +268,6 @@ fun LandingSheet(
 private fun LandingScreenPreview() {
     NoteMarkTheme {
         LandingScreen(
-            modifier = Modifier.fillMaxSize(),
             onAction = {}
         )
     }

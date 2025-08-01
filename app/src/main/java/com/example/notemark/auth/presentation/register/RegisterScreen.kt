@@ -54,62 +54,62 @@ import com.example.notemark.auth.presentation.register.RegisterAction.*
 import com.example.notemark.auth.presentation.register.RegisterEvent.RegistrationError
 import com.example.notemark.auth.presentation.register.RegisterEvent.RegistrationSuccess
 import com.example.notemark.core.domain.util.DataError.Network.*
+import com.example.notemark.core.presentation.designsystem.RootComposable
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun RegistrationScreenRoot(
     onLoginClick: (Int) -> Unit,
-    modifier: Modifier = Modifier,
     viewModel: RegisterViewModel = koinViewModel()
 ) {
-    var snackBarMessageRes by remember { mutableIntStateOf(-1) }
-    val keyboardController = LocalSoftwareKeyboardController.current
+    RootComposable {
+        var snackBarMessageRes by remember { mutableIntStateOf(-1) }
+        val keyboardController = LocalSoftwareKeyboardController.current
 
-    ObserveAsEvents(viewModel.events) { event ->
-        when (event) {
-            is RegistrationSuccess -> {
-                keyboardController?.hide()
-                onLoginClick(R.string.register_screen_registration_successful)
-            }
-            is RegistrationError -> {
-                keyboardController?.hide()
-                val messageRes = when (event.error) {
-                    FORMAT_ERROR, SERIALIZATION -> R.string.register_screen_error_format
-                    UNAUTHORIZED -> R.string.register_screen_error_unauthorized
-                    METHOD_ERROR -> R.string.register_screen_error_method
-                    CONFLICT -> R.string.register_screen_error_conflict
-                    TOO_MANY_REQUESTS -> R.string.register_screen_error_too_many_requests
-                    NO_INTERNET -> R.string.error_no_internet
-                    SERVER_ERROR -> R.string.error_from_server
-                    UNKNOWN -> R.string.register_screen_error_unknown
+        ObserveAsEvents(viewModel.events) { event ->
+            when (event) {
+                is RegistrationSuccess -> {
+                    keyboardController?.hide()
+                    onLoginClick(R.string.register_screen_registration_successful)
                 }
-                snackBarMessageRes = messageRes
+                is RegistrationError -> {
+                    keyboardController?.hide()
+                    val messageRes = when (event.error) {
+                        FORMAT_ERROR, SERIALIZATION -> R.string.register_screen_error_format
+                        UNAUTHORIZED -> R.string.register_screen_error_unauthorized
+                        METHOD_ERROR -> R.string.register_screen_error_method
+                        CONFLICT -> R.string.register_screen_error_conflict
+                        TOO_MANY_REQUESTS -> R.string.register_screen_error_too_many_requests
+                        NO_INTERNET -> R.string.error_no_internet
+                        SERVER_ERROR -> R.string.error_from_server
+                        UNKNOWN -> R.string.register_screen_error_unknown
+                    }
+                    snackBarMessageRes = messageRes
+                }
             }
         }
+
+        RegistrationScreen(
+            state = viewModel.state,
+            message = if (snackBarMessageRes != -1) stringResource(snackBarMessageRes) else "",
+            onAction = { action ->
+                when (action) {
+                    GoToLogin -> onLoginClick(-1)
+                    ClearMessage -> {
+                        snackBarMessageRes = -1
+                    }
+                    else -> Unit
+                }
+                viewModel.onAction(action)
+            }
+        )
     }
-
-    RegistrationScreen(
-        modifier = modifier,
-        state = viewModel.state,
-        message = if (snackBarMessageRes != -1) stringResource(snackBarMessageRes) else "",
-        onAction = { action ->
-            when (action) {
-                GoToLogin -> onLoginClick(-1)
-                ClearMessage -> {
-                    snackBarMessageRes = -1
-                }
-                else -> Unit
-            }
-            viewModel.onAction(action)
-        }
-    )
 }
 
 @Composable
 fun RegistrationScreen(
     state: RegistrationState,
-    modifier: Modifier = Modifier,
     dimens: DimensGeneric = MaterialTheme.dimen.generic,
     statusBarHeight: Dp = statusBarHeight(),
     message: String,
@@ -131,7 +131,7 @@ fun RegistrationScreen(
     }
 
     Box(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.primary)
     ) {
@@ -326,8 +326,6 @@ fun RegistrationSheetForm(
             }
         )
     }
-
-
 }
 
 @MultiDevicePreview
@@ -335,7 +333,6 @@ fun RegistrationSheetForm(
 private fun RegistrationScreenPreview() {
     NoteMarkTheme {
         RegistrationScreen(
-            modifier = Modifier.fillMaxSize(),
             state = RegistrationState(),
             message = "",
             onAction = {}

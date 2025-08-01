@@ -50,6 +50,7 @@ import com.example.notemark.core.presentation.designsystem.statusBarHeight
 import com.example.notemark.auth.presentation.login.LoginAction.*
 import com.example.notemark.auth.presentation.login.LoginEvent.LoginError
 import com.example.notemark.auth.presentation.login.LoginEvent.LoginSuccess
+import com.example.notemark.core.presentation.designsystem.RootComposable
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
@@ -57,48 +58,47 @@ import org.koin.androidx.compose.koinViewModel
 fun LoginScreenRoot(
     onRegisterClick: () -> Unit,
     onLoginSuccess: () -> Unit,
-    modifier: Modifier = Modifier,
     messageRes: Int,
     viewModel: LoginViewModel = koinViewModel()
 ) {
-    var snackBarMessageRes by remember { mutableIntStateOf(messageRes) }
+    RootComposable {
+        var snackBarMessageRes by remember { mutableIntStateOf(messageRes) }
 
-    val keyboardController = LocalSoftwareKeyboardController.current
+        val keyboardController = LocalSoftwareKeyboardController.current
 
-    ObserveAsEvents(viewModel.events) { event ->
-        when (event) {
-            is LoginSuccess -> {
-                keyboardController?.hide()
-                onLoginSuccess()
-            }
-            is LoginError -> {
-                keyboardController?.hide()
-                snackBarMessageRes = R.string.login_screen_error
-            }
-        }
-    }
-
-    LoginScreen(
-        modifier = modifier,
-        state = viewModel.state,
-        message = if (snackBarMessageRes != -1) stringResource(snackBarMessageRes) else "",
-        onAction = { action ->
-            when (action) {
-                OnRegisterClick -> onRegisterClick()
-                ClearMessage -> {
-                    snackBarMessageRes = -1
+        ObserveAsEvents(viewModel.events) { event ->
+            when (event) {
+                is LoginSuccess -> {
+                    keyboardController?.hide()
+                    onLoginSuccess()
                 }
-                else -> Unit
+                is LoginError -> {
+                    keyboardController?.hide()
+                    snackBarMessageRes = R.string.login_screen_error
+                }
             }
-            viewModel.onAction(action)
         }
-    )
+
+        LoginScreen(
+            state = viewModel.state,
+            message = if (snackBarMessageRes != -1) stringResource(snackBarMessageRes) else "",
+            onAction = { action ->
+                when (action) {
+                    OnRegisterClick -> onRegisterClick()
+                    ClearMessage -> {
+                        snackBarMessageRes = -1
+                    }
+                    else -> Unit
+                }
+                viewModel.onAction(action)
+            }
+        )
+    }
 }
 
 @Composable
 fun LoginScreen(
     state: LoginState,
-    modifier: Modifier = Modifier,
     dimens: DimensGeneric = MaterialTheme.dimen.generic,
     statusBarHeight: Dp = statusBarHeight(),
     message: String,
@@ -121,7 +121,7 @@ fun LoginScreen(
     }
 
     Box(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.primary)
     ) {
@@ -283,8 +283,6 @@ fun LoginSheetForm(
             }
         )
     }
-
-
 }
 
 @MultiDevicePreview
@@ -292,7 +290,6 @@ fun LoginSheetForm(
 private fun LoginScreenPreview() {
     NoteMarkTheme {
         LoginScreen(
-            modifier = Modifier.fillMaxSize(),
             state = LoginState(),
             message = "",
             onAction = {}

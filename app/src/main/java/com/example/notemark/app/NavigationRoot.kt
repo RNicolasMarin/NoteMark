@@ -1,8 +1,6 @@
 package com.example.notemark.app
 
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -15,8 +13,7 @@ import com.example.notemark.auth.presentation.register.RegistrationScreenRoot
 
 @Composable
 fun NavigationRoot(
-    navController: NavHostController,
-    modifier: Modifier = Modifier
+    navController: NavHostController
 ) {
 
     NavHost(
@@ -25,7 +22,6 @@ fun NavigationRoot(
     ) {
         composable<Landing> {
             LandingScreenRoot(
-                modifier = modifier.fillMaxSize(),
                 onLoginClick = {
                     navController.navigate(Login(messageRes = -1)) {
                         popUpTo(0) { inclusive = true }
@@ -41,7 +37,6 @@ fun NavigationRoot(
         composable<Login> {
             val args = it.toRoute<Login>()
             LoginScreenRoot(
-                modifier = modifier.fillMaxSize(),
                 messageRes = args.messageRes,
                 onRegisterClick = {
                     navController.navigate(Registration) {
@@ -57,7 +52,6 @@ fun NavigationRoot(
         }
         composable<Registration> {
             RegistrationScreenRoot(
-                modifier = modifier.fillMaxSize(),
                 onLoginClick = { messageRes ->
                     navController.navigate(Login(messageRes = messageRes)) {
                         popUpTo(0) { inclusive = true }
